@@ -30,7 +30,7 @@ const Home = () => {
   const [selectedState, setSelectedState] = useState<string>("");
   const [selectedCityCode, setSelectedCityCode] = useState<string>("");
   const [arrState, setArrState] = useState<string[][]>([[]]);
-  const [selectedDay, setSelesctedDay] = useState<number[]>([]);
+  // const [selectedDay, setSelectedDay] = useState<number[]>([]);
   const [displayCoordsLoader, setDisplayCoordsLoader] =
     useState<boolean>(false);
   const [data, setData] = useState<IGetPrayerTimeResponse | undefined>(
