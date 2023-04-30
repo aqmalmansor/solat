@@ -118,9 +118,11 @@ const Home = () => {
               });
             } else {
               alert("Geolocation is not supported by this browser.");
+              setDisplayCoordsLoader(false);
             }
           } else {
             alert("Please allow your location permission in your browser.");
+            setDisplayCoordsLoader(false);
           }
         });
   };
@@ -153,7 +155,7 @@ const Home = () => {
       data.data &&
       data.data.data && (
         <React.Fragment>
-          <div>Malaysia Prayer Times</div>
+          <div>Islamic Prayer Times in Malaysia</div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-3">
               <div>{data.data.data.place}</div>
