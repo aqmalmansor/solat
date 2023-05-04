@@ -12,8 +12,8 @@ const AppRoot = () => {
 const Footer = () => {
   return (
     <div className="fixed bottom-0 w-full text-center">
-      Made by
-      <a href="https://github.com/kifasu/solat">aqmlmnsr</a>
+      Made by&nbsp;
+      <a href="https://github.com/kifasu/solat">aqmal mansor</a>
     </div>
   );
 };

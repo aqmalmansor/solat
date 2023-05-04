@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import uuid from "react-uuid";
+import SVG from "react-inlinesvg";
 
 import Solat from "../services/solat";
 import {
@@ -17,6 +18,7 @@ import PrayerTimeCard from "../components/PrayerTimeCard";
 
 import helper from "../utils/helper";
 import { zon } from "../utils/placeholder";
+import icons from "../assets/icons";
 
 const Home = () => {
   const initialValue: IGetPrayerTimeParams = {
@@ -155,10 +157,12 @@ const Home = () => {
       data.data &&
       data.data.data && (
         <React.Fragment>
-          <div>Islamic Prayer Times in Malaysia</div>
+          <div>
+            <h1>Islamic Prayer Times in Malaysia</h1>
+          </div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-3">
-              <div>{data.data.data.place}</div>
+              <h2>{data.data.data.place}</h2>
             </div>
           </div>
           <div className="flex w-full flex-row flex-wrap justify-center">
@@ -257,7 +261,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
+          <div className="flex w-full flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
             <div className="flex w-full flex-row flex-wrap justify-between px-5">
               <div>{dayjs().format("DD MMMM YYYY")}</div>
               <button
@@ -265,7 +269,15 @@ const Home = () => {
                 disabled={displayCoordsLoader}
                 onClick={getUserCurrentLocationHandler}
               >
-                {displayCoordsLoader ? "Loading" : "Get Current Location Icon"}
+                {displayCoordsLoader ? (
+                  "Loading"
+                ) : (
+                  <SVG
+                    src={icons.GetCurrentLocationSVG}
+                    height={25}
+                    width={25}
+                  />
+                )}
               </button>
             </div>
             {data.data.data.times.map((prayerList) => {
