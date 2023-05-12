@@ -58,7 +58,7 @@ const Home = () => {
         setArrState(
           Object.values(zon)[
             Object.keys(zon).findIndex(
-              (i) => i === helper.cityStateChecker(data.data.data.code)
+              (i) => i === helper.cityStateChecker(data.data.code)
             )
           ]
         );
@@ -81,7 +81,7 @@ const Home = () => {
         setArrState(
           Object.values(zon)[
             Object.keys(zon).findIndex(
-              (i) => i === helper.cityStateChecker(data.data.data.code)
+              (i) => i === helper.cityStateChecker(data.data.code)
             )
           ]
         );
@@ -130,7 +130,7 @@ const Home = () => {
   };
 
   const renderHomeContent = () => {
-    const jakimLink = data?.data.data.attributes.jakim_source || "";
+    const jakimLink = data?.data.attributes.jakim_source || "";
     const updatedJakimLink = jakimLink.replace(
       "period=duration",
       "period=today"
@@ -154,15 +154,14 @@ const Home = () => {
 
     return (
       data &&
-      data.data &&
-      data.data.data && (
+      data.data && (
         <React.Fragment>
           <div>
             <h1>Islamic Prayer Times in Malaysia</h1>
           </div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-3">
-              <h2>{data.data.data.place}</h2>
+              <h2>{data.data.place}</h2>
             </div>
           </div>
           <div className="flex w-full flex-row flex-wrap justify-center">
@@ -184,8 +183,7 @@ const Home = () => {
                     setArrState(selectedCityList);
                   }}
                   value={
-                    selectedState ||
-                    helper.cityStateChecker(data.data.data.code)
+                    selectedState || helper.cityStateChecker(data.data.code)
                   }
                   className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   id="grid-state"
@@ -280,7 +278,7 @@ const Home = () => {
                 )}
               </button>
             </div>
-            {data.data.data.times.map((prayerList) => {
+            {data.data.times.map((prayerList) => {
               return prayerList.map((prayer, index) => {
                 const prayerTime = dayjs(new Date(prayer * 1000));
 
@@ -301,7 +299,7 @@ const Home = () => {
           <div className="capitalize">
             <div className="flex gap-3">
               <div>Reference:</div>
-              <a href={updatedJakimLink}>{data.data.data.provider}</a>
+              <a href={updatedJakimLink}>{data.data.provider}</a>
             </div>
           </div>
         </React.Fragment>

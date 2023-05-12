@@ -20,17 +20,15 @@ export interface IGetPrayerTimeParams {
 
 export interface IGetPrayerTimeResponse {
   data: {
-    data: {
-      attributes: {
-        jakim_code: string;
-        jakim_source: string;
-      };
-      code: string;
-      place: string;
-      provider: string;
-      month: number;
-      year: number;
-      times: [[number]];
+    attributes: {
+      jakim_code: string;
+      jakim_source: string;
     };
+    code: string;
+    place: string;
+    provider: string;
+    month: number;
+    year: number;
+    times: [[number]];
   };
 }
