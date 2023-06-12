@@ -172,7 +172,7 @@ const Home = () => {
               >
                 State
               </label>
-              <div className="relative">
+              <div className="relative shadow-inner">
                 <select
                   onChange={(e) => {
                     setSelectedState(e.target.value);
@@ -185,7 +185,7 @@ const Home = () => {
                   value={
                     selectedState || helper.cityStateChecker(data.data.code)
                   }
-                  className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  className="block w-full appearance-none rounded border-gray-200 shadow-md hover:shadow-xl transition duration-300 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   id="grid-state"
                 >
                   {Object.keys(zon).map((z) => {
@@ -223,7 +223,7 @@ const Home = () => {
               >
                 City
               </label>
-              <div className="relative">
+              <div className="relative shadow-inner">
                 <select
                   value={selectedCityCode}
                   onChange={(e) => {
@@ -233,7 +233,7 @@ const Home = () => {
                       code: e.target.value,
                     });
                   }}
-                  className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
+                  className="block w-full appearance-none rounded border-gray-200 shadow-md hover:shadow-xl transition duration-300 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   id="grid-city"
                 >
                   <option value="">Please select one of the option</option>
@@ -259,7 +259,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex w-full flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
+          <div className="flex w-full flex-row flex-wrap content-center justify-center md:justify-around">
             <div className="flex w-full flex-row flex-wrap justify-between px-5">
               <div>{dayjs().format("DD MMMM YYYY")}</div>
               <button
