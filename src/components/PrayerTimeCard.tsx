@@ -7,12 +7,13 @@ export interface IPrayerTimeCard {
 
 const PrayerTimeCard = ({ index, time }: IPrayerTimeCard) => {
   return (
-    <div className="bg-primary shadow-md rounded-lg md:m-6 hover:shadow-xl hover: grow-1 m-1 transition duration-300 cursor-pointer">
-      <div className="bg-white rounded-lg p-8 shadow-inner">
-        <div className="text-xl font-semibold mb-2 text-center">{helper.convertIndexToPrayerTitle(index)}</div>
-        <div className="text-gray-600 text-center">{time.split("@")[1]}</div>
+    <div className="card w-fit h-fit bg-neutral text-neutral-content">
+      <div className="card-body items-center text-center p-4">
+        <p className="card-title text-sm">{helper.convertIndexToPrayerTitle(index)}</p>
+        <p className="text-3xl flex-grow-0">{time.split("@")[1]}</p>
       </div>
     </div>
+
   );
 };
 

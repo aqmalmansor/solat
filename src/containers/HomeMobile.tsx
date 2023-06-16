@@ -19,6 +19,7 @@ import PrayerTimeCard from "../components/PrayerTimeCard";
 import helper from "../utils/helper";
 import { zon } from "../utils/placeholder";
 import icons from "../assets/icons";
+import PhoneMockup from "../components/PhoneMockup";
 
 const HomeMobile = () => {
     const initialValue: IGetPrayerTimeParams = {
@@ -156,15 +157,10 @@ const HomeMobile = () => {
             data &&
             data.data && (
                 <React.Fragment>
-                    <div>
+                    {/* <div>
                         <h1>Islamic Prayer Times in Malaysia</h1>
-                    </div>
-                    <div className="flex flex-col gap-3">
-                        <div className="flex flex-row gap-3">
-                            <h2>{data.data.place}</h2>
-                        </div>
-                    </div>
-                    <div className="flex w-full flex-row flex-wrap justify-center">
+                    </div> */}
+                    {/* <div className="flex w-full flex-row flex-wrap justify-center">
                         <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
                             <label
                                 className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
@@ -257,10 +253,10 @@ const HomeMobile = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="flex w-full flex-row flex-wrap content-center justify-center md:justify-around">
-                        <div className="flex w-full flex-row flex-wrap justify-between px-5">
+                    <div className="flex w-full flex-row flex-wrap justify-center h-fit gap-5">
+                        <div className="flex w-full flex-row flex-wrap justify-between px-5 h-fit">
                             <div>{dayjs().format("DD MMMM YYYY")}</div>
                             <button
                                 type="button"
@@ -278,6 +274,7 @@ const HomeMobile = () => {
                                 )}
                             </button>
                         </div>
+                        <div className="flex flex-wrap gap-5 justify-center items-center h-fit">
                         {data.data.times.map((prayerList) => {
                             return prayerList.map((prayer, index) => {
                                 const prayerTime = dayjs(new Date(prayer * 1000));
@@ -295,24 +292,30 @@ const HomeMobile = () => {
                                 );
                             });
                         })}
+                            <div className="card w-full h-fit bg-neutral text-neutral-content mx-3">
+                                <div className="card-body items-center text-center p-4">
+                                    <p className="card-title">{data.data.place}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="capitalize">
+                    {/* <div className="capitalize">
                         <div className="flex gap-3">
                             <div>Reference:</div>
                             <a href={updatedJakimLink}>{data.data.provider}</a>
                         </div>
-                    </div>
+                    </div> */}
                 </React.Fragment>
             )
         );
     };
 
     return (
-        <Container>
-            <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-9">
-                {renderHomeContent()}
-            </div>
-        </Container>
+        <div className="flex flex-wrap justify-center items-center h-screen">
+            <PhoneMockup>
+                    {renderHomeContent()}
+            </PhoneMockup>
+        </div>
     );
 };
 
