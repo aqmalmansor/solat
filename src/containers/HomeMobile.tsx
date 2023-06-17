@@ -20,6 +20,8 @@ import helper from "../utils/helper";
 import { zon } from "../utils/placeholder";
 import icons from "../assets/icons";
 import PhoneMockup from "../components/PhoneMockup";
+import ThemeSwitch from "../components/ThemeSwitch";
+import Menu from "../components/Menu";
 
 const HomeMobile = () => {
     const initialValue: IGetPrayerTimeParams = {
@@ -160,119 +162,12 @@ const HomeMobile = () => {
                     {/* <div>
                         <h1>Islamic Prayer Times in Malaysia</h1>
                     </div> */}
-                    {/* <div className="flex w-full flex-row flex-wrap justify-center">
-                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-                                htmlFor="grid-state"
-                            >
-                                State
-                            </label>
-                            <div className="relative shadow-inner">
-                                <select
-                                    onChange={(e) => {
-                                        setSelectedState(e.target.value);
-                                        const selectedCityList =
-                                            Object.values(zon)[
-                                            Object.keys(zon).findIndex((i) => i === e.target.value)
-                                            ];
-                                        setArrState(selectedCityList);
-                                    }}
-                                    value={
-                                        selectedState || helper.cityStateChecker(data.data.code)
-                                    }
-                                    className="block w-full appearance-none rounded border-gray-200 shadow-md hover:shadow-xl transition duration-300 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="grid-state"
-                                >
-                                    {Object.keys(zon).map((z) => {
-                                        let newZ: string = z;
-                                        if (z === "wilayah") {
-                                            newZ = "Wilayah Persekutuan";
-                                        } else if (z === "pulauPinang") {
-                                            newZ = "Pulau Pinang";
-                                        } else if (z === "negeriSembilan") {
-                                            newZ = "Negeri Sembilan";
-                                        }
-
-                                        return (
-                                            <option key={uuid()} value={z}>
-                                                {newZ}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg
-                                        className="h-4 w-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                    </svg>
-                                </div>
+                    <div className="relative flex w-full flex-row flex-wrap justify-center h-fit gap-4">
+                        <div className="flex justify-between my-2 mx-5 w-full">
+                            <div className="card-body py-4 px-0">
+                                <p className="card-title m-0">{data.data.place}</p>
                             </div>
-                        </div>
-                        <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-                            <label
-                                className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-                                htmlFor="grid-city"
-                            >
-                                City
-                            </label>
-                            <div className="relative shadow-inner">
-                                <select
-                                    value={selectedCityCode}
-                                    onChange={(e) => {
-                                        setSelectedCityCode(e.target.value);
-                                        setInputVal({
-                                            ...inputVal,
-                                            code: e.target.value,
-                                        });
-                                    }}
-                                    className="block w-full appearance-none rounded border-gray-200 shadow-md hover:shadow-xl transition duration-300 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                                    id="grid-city"
-                                >
-                                    <option value="">Please select one of the option</option>
-                                    {arrState.length > 0 &&
-                                        arrState.map((arr) => {
-                                            return (
-                                                <option key={uuid()} value={arr[1]}>
-                                                    {arr[0]}
-                                                </option>
-                                            );
-                                        })}
-                                </select>
-                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                    <svg
-                                        className="h-4 w-4 fill-current"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                    >
-                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
-
-                    <div className="flex w-full flex-row flex-wrap justify-center h-fit gap-5">
-                        <div className="flex w-full flex-row flex-wrap justify-between px-5 h-fit">
-                            <div>{dayjs().format("DD MMMM YYYY")}</div>
-                            <button
-                                type="button"
-                                disabled={displayCoordsLoader}
-                                onClick={getUserCurrentLocationHandler}
-                            >
-                                {displayCoordsLoader ? (
-                                    "Loading"
-                                ) : (
-                                    <SVG
-                                        src={icons.GetCurrentLocationSVG}
-                                        height={25}
-                                        width={25}
-                                    />
-                                )}
-                            </button>
+                        <ThemeSwitch />
                         </div>
                         <div className="flex flex-wrap gap-5 justify-center items-center h-fit">
                         {data.data.times.map((prayerList) => {
@@ -292,12 +187,93 @@ const HomeMobile = () => {
                                 );
                             });
                         })}
-                            <div className="card w-full h-fit bg-neutral text-neutral-content mx-3">
-                                <div className="card-body items-center text-center p-4">
-                                    <p className="card-title">{data.data.place}</p>
-                                </div>
-                            </div>
                         </div>
+                        <div className="flex w-full flex-row flex-wrap justify-between mx-5 my-3 h-fit">
+                            <div className="text-base-content">{dayjs().format("DD MMMM YYYY")}</div>
+                            <button
+                                type="button"
+                                disabled={displayCoordsLoader}
+                                onClick={getUserCurrentLocationHandler}
+                            >
+                                {displayCoordsLoader ? (
+                                    "Loading"
+                                ) : (
+                                    <SVG
+                                        src={icons.GetCurrentLocationSVG}
+                                        height={25}
+                                        width={25}
+                                    />
+                                )}
+                            </button>
+                        </div>
+                        <Menu>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">State</span>
+                                    <span className="label-text-alt">Alt label</span>
+                                </label>
+                                <select
+                                    onChange={(e) => {
+                                        setSelectedState(e.target.value);
+                                        const selectedCityList =
+                                            Object.values(zon)[
+                                            Object.keys(zon).findIndex((i) => i === e.target.value)
+                                            ];
+                                        setArrState(selectedCityList);
+                                        e.stopPropagation();
+                                    }}
+                                    value={
+                                        selectedState || helper.cityStateChecker(data.data.code)
+                                    }
+                                    className="select select-primary w-full max-w-xs"
+                                >
+                                    {Object.keys(zon).map((z) => {
+                                        let newZ: string = z;
+                                        if (z === "wilayah") {
+                                            newZ = "Wilayah Persekutuan";
+                                        } else if (z === "pulauPinang") {
+                                            newZ = "Pulau Pinang";
+                                        } else if (z === "negeriSembilan") {
+                                            newZ = "Negeri Sembilan";
+                                        }
+
+                                        return (
+                                            <option key={uuid()} value={z}>
+                                                {newZ}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className="form-control w-full max-w-xs">
+                                <label className="label">
+                                    <span className="label-text">City</span>
+                                    <span className="label-text-alt">Alt label</span>
+                                </label>
+                                <select
+                                    value={selectedCityCode}
+                                    onChange={(e) => {
+                                        setSelectedCityCode(e.target.value);
+                                        setInputVal({
+                                            ...inputVal,
+                                            code: e.target.value,
+                                        });
+                                        e.stopPropagation();
+                                    }}
+                                    className="select select-primary w-full max-w-xs"
+                                >
+                                    <option value="">Please select one of the option</option>
+                                    {arrState.length > 0 &&
+                                        arrState.map((arr) => {
+                                            return (
+                                                <option key={uuid()} value={arr[1]}>
+                                                    {arr[0]}
+                                                </option>
+                                            );
+                                        })}
+                                </select>
+                            </div>
+                        </Menu>
                     </div>
                     {/* <div className="capitalize">
                         <div className="flex gap-3">
