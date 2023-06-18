@@ -11,7 +11,7 @@ const AppRoot = () => {
 
 const Footer = () => {
   return (
-    <div className="bg-background fixed bottom-0 w-full text-center">
+    <div className="bg-background fixed bottom-0 w-full text-center hidden md:block">
       Made by&nbsp;
       <a href="https://github.com/kifasu/solat">aqmal mansor</a>
     </div>

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
+import { motion, useAnimate  } from "framer-motion"
+
 
 import Solat from "../services/solat";
 import {
@@ -13,7 +15,6 @@ import {
     IGetPrayerTimeResponse,
 } from "../entities/solat";
 
-import Container from "../components/Container";
 import PrayerTimeCard from "../components/PrayerTimeCard";
 
 import helper from "../utils/helper";
@@ -162,14 +163,14 @@ const HomeMobile = () => {
                     {/* <div>
                         <h1>Islamic Prayer Times in Malaysia</h1>
                     </div> */}
-                    <div className="relative flex w-full flex-row flex-wrap justify-center h-fit gap-4">
+                    <div className="relative flex w-full flex-row flex-wrap justify-center h-full gap-4 visible">
                         <div className="flex justify-between my-2 mx-5 w-full">
                             <div className="card-body py-4 px-0">
                                 <p className="card-title m-0">{data.data.place}</p>
                             </div>
                         <ThemeSwitch />
                         </div>
-                        <div className="flex flex-wrap gap-5 justify-center items-center h-fit">
+                        <div className="flex flex-wrap gap-5 justify-center items-center h-fit mx-5 md:mx-0">
                         {data.data.times.map((prayerList) => {
                             return prayerList.map((prayer, index) => {
                                 const prayerTime = dayjs(new Date(prayer * 1000));
@@ -288,9 +289,14 @@ const HomeMobile = () => {
 
     return (
         <div className="flex flex-wrap justify-center items-center h-screen">
-            <PhoneMockup>
-                    {renderHomeContent()}
-            </PhoneMockup>
+            <div className="hidden sm:flex">
+                <PhoneMockup>
+                        {renderHomeContent()}
+                </PhoneMockup>
+            </div>
+            <div className="block h-full overflow-hidden sm:hidden ">
+                {renderHomeContent()}
+            </div>
         </div>
     );
 };

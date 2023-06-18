@@ -6,7 +6,7 @@ export default {
       spacing: {
         'phoneWidth': '400px',
         'phoneHeight': '845px',
-        'menu': '300px',
+        'menu': '320px',
       },
     },
   },
