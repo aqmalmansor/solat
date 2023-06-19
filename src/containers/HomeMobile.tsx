@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
-import { motion, useAnimate  } from "framer-motion"
 
 
 import Solat from "../services/solat";
@@ -134,11 +133,11 @@ const HomeMobile = () => {
     };
 
     const renderHomeContent = () => {
-        const jakimLink = data?.data.attributes.jakim_source || "";
-        const updatedJakimLink = jakimLink.replace(
-            "period=duration",
-            "period=today"
-        );
+        // const jakimLink = data?.data.attributes.jakim_source || "";
+        // const updatedJakimLink = jakimLink.replace(
+        //     "period=duration",
+        //     "period=today"
+        // );
 
         if (getPrayerTimesBasedOnCodenameIsLoading) {
             return <div>Loading...</div>;
