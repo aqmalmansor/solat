@@ -5,7 +5,7 @@ import { useState } from "react";
 import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
 
-import Solat from "../services/solat";
+import Solat from "services/solat";
 import {
   FilterByPeriodEnum,
   IGetPrayerTimeCoordParams,
@@ -13,12 +13,12 @@ import {
   IGetPrayerTimeResponse,
 } from "../entities/solat";
 
-import Container from "../components/Container";
-import PrayerTimeCard from "../components/PrayerTimeCard";
+import Container from "components/Container";
+import PrayerTimeCard from "components/PrayerTimeCard";
 
-import helper from "../utils/helper";
-import { zon } from "../utils/placeholder";
-import icons from "../assets/icons";
+import helper from "utils/helper";
+import { zon } from "utils/placeholder";
+import icons from "assets/icons";
 
 const Home = () => {
   const initialValue: IGetPrayerTimeParams = {
