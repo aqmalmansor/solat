@@ -11,13 +11,14 @@ import {
   IGetPrayerTimeCoordParams,
   IGetPrayerTimeParams,
   IGetPrayerTimeResponse,
-} from "../entities/solat";
+} from "entities/solat";
 
-import Container from "components/Container";
 import PrayerTimeCard from "components/PrayerTimeCard";
+import Footer from "./Footer";
 
 import helper from "utils/helper";
 import { zon } from "utils/placeholder";
+
 import icons from "assets/icons";
 
 const Home = () => {
@@ -286,12 +287,11 @@ const Home = () => {
                   return null;
                 }
                 return (
-                  <React.Fragment key={`${index}--${prayer * 1000}`}>
-                    <PrayerTimeCard
-                      index={index}
-                      time={prayerTime.format("DD-MM-YYYY@HH:mm A")}
-                    />
-                  </React.Fragment>
+                  <PrayerTimeCard
+                    key={`${index}--${prayer * 1000}`}
+                    index={index}
+                    time={prayerTime.format("DD-MM-YYYY@HH:mm A")}
+                  />
                 );
               });
             })}
@@ -308,11 +308,12 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-9">
+    <div className="container relative mx-auto min-h-[100vh]">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-10">
         {renderHomeContent()}
       </div>
-    </Container>
+      <Footer />
+    </div>
   );
 };
 
