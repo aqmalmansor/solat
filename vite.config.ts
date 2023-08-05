@@ -5,7 +5,10 @@ import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
 const manifestPlugin: Partial<VitePWAOptions> = {
   registerType: "prompt",
-  includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+  workbox: {
+    globPatterns: ["**/*"],
+  },
+  includeAssets: ["**/*"],
   manifest: {
     name: "Malaysian Prayer Times",
     short_name: "Malaysian Prayer Times",
