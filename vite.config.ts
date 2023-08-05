@@ -511,11 +511,6 @@ const pwaIcons = [
     purpose: "any maskable",
   },
   {
-    src: "ios/114.png",
-    sizes: "114x114",
-    purpose: "any maskable",
-  },
-  {
     src: "ios/120.png",
     sizes: "120x120",
     purpose: "any maskable",
