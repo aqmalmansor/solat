@@ -1,11 +1,7 @@
 import Routes from "../navigation/Routes";
 
 const AppRoot = () => {
-  return (
-      <Routes />
-  );
+  return <Routes />;
 };
-
-
 
 export default AppRoot;
