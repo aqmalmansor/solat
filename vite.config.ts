@@ -21,9 +21,24 @@ const manifestPlugin: Partial<VitePWAOptions> = {
     orientation: "portrait",
     icons: [
       {
-        src: "/public/vite.svg",
-        size: " 192x192",
-        type: "image/svg+xml",
+        src: "/icon-192x192.png",
+        size: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/icon-256x256.png",
+        size: "256x256",
+        type: "image/png",
+      },
+      {
+        src: "/icon-384x384.png",
+        size: "384x384",
+        type: "image/png",
+      },
+      {
+        src: "/icon-512x512.png",
+        size: "512x512",
+        type: "image/png",
       },
     ],
   },
