@@ -32,3 +32,13 @@ export interface IGetPrayerTimeResponse {
     times: [[number]];
   };
 }
+
+export enum SolatEnum {
+  none,
+  imsak,
+  subuh,
+  zohor,
+  asar,
+  maghrib,
+  isyak,
+}
