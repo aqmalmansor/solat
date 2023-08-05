@@ -198,13 +198,11 @@ const Home = () => {
                       newZ = "Pulau Pinang";
                     } else if (z === "negeriSembilan") {
                       newZ = "Negeri Sembilan";
-                    } else {
-                      newZ = helper.capitalizeWords(z);
                     }
 
                     return (
                       <option key={uuid()} value={z}>
-                        {newZ}
+                        {helper.capitalizeWords(newZ)}
                       </option>
                     );
                   })}
