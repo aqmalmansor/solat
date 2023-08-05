@@ -9,7 +9,7 @@ import { registerSW } from "virtual:pwa-register";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("Reload page?")) {
+    if (confirm("New content available. Refresh?")) {
       updateSW(true);
     }
   },
