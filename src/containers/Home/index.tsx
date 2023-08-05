@@ -6,9 +6,9 @@ import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
 
 import Solat from "services/solat";
+
 import {
   FilterByPeriodEnum,
-  IGetPrayerTimeCoordParams,
   IGetPrayerTimeParams,
   IGetPrayerTimeResponse,
 } from "entities/solat";
@@ -21,6 +21,8 @@ import { zon } from "utils/placeholder";
 
 import icons from "assets/icons";
 
+import { useSolatStore } from "store/solat";
+
 const Home = () => {
   const initialValue: IGetPrayerTimeParams = {
     code: "wlp-0",
@@ -29,21 +31,22 @@ const Home = () => {
     appurl: "http://mpt.i906.my",
   };
 
+  const {
+    addressState,
+    setAddressState,
+    userCoords,
+    setUserCoords,
+    cityCode,
+    setCityCode,
+  } = useSolatStore();
+
   const [inputVal, setInputVal] = useState<IGetPrayerTimeParams>(initialValue);
-  const [selectedState, setSelectedState] = useState<string>("");
-  const [selectedCityCode, setSelectedCityCode] = useState<string>("");
   const [arrState, setArrState] = useState<string[][]>([[]]);
   const [displayCoordsLoader, setDisplayCoordsLoader] =
     useState<boolean>(false);
   const [data, setData] = useState<IGetPrayerTimeResponse | undefined>(
     undefined
   );
-  const [coordsVal, setCoordsVal] = useState<IGetPrayerTimeCoordParams>({
-    coords: {
-      lat: "",
-      lng: "",
-    },
-  });
 
   const {
     isLoading: getPrayerTimesBasedOnCodenameIsLoading,
@@ -72,11 +75,11 @@ const Home = () => {
     isError: getPrayerTimesBasedOnCoordsIsError,
     error: getPrayerTimesBasedOnCoordsError,
   } = useQuery<IGetPrayerTimeResponse, Error>(
-    ["getPrayerTimeBasedOnCoordsQuery", coordsVal],
-    async () => await Solat.basedOnCoords(coordsVal),
+    ["getPrayerTimeBasedOnCoordsQuery", userCoords],
+    async () => await Solat.basedOnCoords(userCoords),
     {
       cacheTime: 0,
-      enabled: !!coordsVal.coords.lat && !!coordsVal.coords.lng,
+      enabled: !!userCoords.coords.lat && !!userCoords.coords.lng,
       onSuccess: (data) => {
         setData(data);
         setArrState(
@@ -95,7 +98,7 @@ const Home = () => {
 
   const getUserCurrentLocationHandler = () => {
     setDisplayCoordsLoader(true);
-    setCoordsVal({
+    setUserCoords({
       coords: {
         lat: "",
         lng: "",
@@ -112,7 +115,7 @@ const Home = () => {
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition((position) => {
                 const { latitude, longitude } = position.coords;
-                setCoordsVal({
+                setUserCoords({
                   coords: {
                     lat: latitude.toString(),
                     lng: longitude.toString(),
@@ -176,7 +179,7 @@ const Home = () => {
               <div className="relative">
                 <select
                   onChange={(e) => {
-                    setSelectedState(e.target.value);
+                    setAddressState(e.target.value);
                     const selectedCityList =
                       Object.values(zon)[
                         Object.keys(zon).findIndex((i) => i === e.target.value)
@@ -184,7 +187,7 @@ const Home = () => {
                     setArrState(selectedCityList);
                   }}
                   value={
-                    selectedState || helper.cityStateChecker(data.data.code)
+                    addressState || helper.cityStateChecker(data.data.code)
                   }
                   className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   id="grid-state"
@@ -226,9 +229,9 @@ const Home = () => {
               </label>
               <div className="relative">
                 <select
-                  value={selectedCityCode}
+                  value={cityCode}
                   onChange={(e) => {
-                    setSelectedCityCode(e.target.value);
+                    setCityCode(e.target.value);
                     setInputVal({
                       ...inputVal,
                       code: e.target.value,

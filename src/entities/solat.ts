@@ -42,3 +42,12 @@ export enum SolatEnum {
   maghrib,
   isyak,
 }
+
+export interface ICompulsaryPrayer {
+  imsak: string;
+  subuh: string;
+  zohor: string;
+  asar: string;
+  maghrib: string;
+  isyak: string;
+}
