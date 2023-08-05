@@ -56,7 +56,6 @@ const Home = () => {
     ["getPrayerTimeBasedOnCodenameQuery", inputVal],
     async () => await Solat.basedOnCodename(inputVal),
     {
-      cacheTime: 0,
       onSuccess: (data) => {
         setData(data);
         setArrState(
@@ -78,7 +77,6 @@ const Home = () => {
     ["getPrayerTimeBasedOnCoordsQuery", userCoords],
     async () => await Solat.basedOnCoords(userCoords),
     {
-      cacheTime: 0,
       enabled: !!userCoords.coords.lat && !!userCoords.coords.lng,
       onSuccess: (data) => {
         setData(data);
@@ -268,6 +266,7 @@ const Home = () => {
               <div>{dayjs().format("DD MMMM YYYY")}</div>
               <button
                 type="button"
+                aria-label="Get Current location"
                 disabled={displayCoordsLoader}
                 onClick={getUserCurrentLocationHandler}
               >
