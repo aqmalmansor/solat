@@ -26,7 +26,7 @@ const cityStateChecker = (code: string): string => {
       return "kedah";
     case "ktn":
       return "kelantan";
-    case "melaka":
+    case "mlk":
       return "melaka";
     case "ngs":
       return "negeriSembilan";
