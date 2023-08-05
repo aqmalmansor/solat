@@ -29,7 +29,7 @@ export const zon = {
   ],
   kelantan: [
     ["Bachok", "ktn-0"],
-    ["Bertam", "ktn-1"],
+    // ["Bertam", "ktn-1"],
     // ["Jeli", "ktn-2"],
     ["Kota Bharu", "ktn-3"],
     ["Kuala Krai", "ktn-4"],

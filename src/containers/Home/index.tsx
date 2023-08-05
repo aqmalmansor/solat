@@ -3,20 +3,25 @@ import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import uuid from "react-uuid";
+import SVG from "react-inlinesvg";
 
-import Solat from "../services/solat";
+import Solat from "services/solat";
+
 import {
   FilterByPeriodEnum,
-  IGetPrayerTimeCoordParams,
   IGetPrayerTimeParams,
   IGetPrayerTimeResponse,
-} from "../entities/solat";
+} from "entities/solat";
 
-import Container from "../components/Container";
-import PrayerTimeCard from "../components/PrayerTimeCard";
+import PrayerTimeCard from "components/PrayerTimeCard";
+import Footer from "./Footer";
 
-import helper from "../utils/helper";
-import { zon } from "../utils/placeholder";
+import helper from "utils/helper";
+import { zon } from "utils/placeholder";
+
+import icons from "assets/icons";
+
+import { useSolatStore } from "store/solat";
 
 const Home = () => {
   const initialValue: IGetPrayerTimeParams = {
@@ -26,21 +31,22 @@ const Home = () => {
     appurl: "http://mpt.i906.my",
   };
 
+  const {
+    addressState,
+    setAddressState,
+    userCoords,
+    setUserCoords,
+    cityCode,
+    setCityCode,
+  } = useSolatStore();
+
   const [inputVal, setInputVal] = useState<IGetPrayerTimeParams>(initialValue);
-  const [selectedState, setSelectedState] = useState<string>("");
-  const [selectedCityCode, setSelectedCityCode] = useState<string>("");
   const [arrState, setArrState] = useState<string[][]>([[]]);
   const [displayCoordsLoader, setDisplayCoordsLoader] =
     useState<boolean>(false);
   const [data, setData] = useState<IGetPrayerTimeResponse | undefined>(
     undefined
   );
-  const [coordsVal, setCoordsVal] = useState<IGetPrayerTimeCoordParams>({
-    coords: {
-      lat: "",
-      lng: "",
-    },
-  });
 
   const {
     isLoading: getPrayerTimesBasedOnCodenameIsLoading,
@@ -50,13 +56,12 @@ const Home = () => {
     ["getPrayerTimeBasedOnCodenameQuery", inputVal],
     async () => await Solat.basedOnCodename(inputVal),
     {
-      cacheTime: 0,
       onSuccess: (data) => {
         setData(data);
         setArrState(
           Object.values(zon)[
             Object.keys(zon).findIndex(
-              (i) => i === helper.cityStateChecker(data.data.data.code)
+              (i) => i === helper.cityStateChecker(data.data.code)
             )
           ]
         );
@@ -69,17 +74,16 @@ const Home = () => {
     isError: getPrayerTimesBasedOnCoordsIsError,
     error: getPrayerTimesBasedOnCoordsError,
   } = useQuery<IGetPrayerTimeResponse, Error>(
-    ["getPrayerTimeBasedOnCoordsQuery", coordsVal],
-    async () => await Solat.basedOnCoords(coordsVal),
+    ["getPrayerTimeBasedOnCoordsQuery", userCoords],
+    async () => await Solat.basedOnCoords(userCoords),
     {
-      cacheTime: 0,
-      enabled: !!coordsVal.coords.lat && !!coordsVal.coords.lng,
+      enabled: !!userCoords.coords.lat && !!userCoords.coords.lng,
       onSuccess: (data) => {
         setData(data);
         setArrState(
           Object.values(zon)[
             Object.keys(zon).findIndex(
-              (i) => i === helper.cityStateChecker(data.data.data.code)
+              (i) => i === helper.cityStateChecker(data.data.code)
             )
           ]
         );
@@ -92,7 +96,7 @@ const Home = () => {
 
   const getUserCurrentLocationHandler = () => {
     setDisplayCoordsLoader(true);
-    setCoordsVal({
+    setUserCoords({
       coords: {
         lat: "",
         lng: "",
@@ -109,7 +113,7 @@ const Home = () => {
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition((position) => {
                 const { latitude, longitude } = position.coords;
-                setCoordsVal({
+                setUserCoords({
                   coords: {
                     lat: latitude.toString(),
                     lng: longitude.toString(),
@@ -128,7 +132,7 @@ const Home = () => {
   };
 
   const renderHomeContent = () => {
-    const jakimLink = data?.data.data.attributes.jakim_source || "";
+    const jakimLink = data?.data.attributes.jakim_source || "";
     const updatedJakimLink = jakimLink.replace(
       "period=duration",
       "period=today"
@@ -152,13 +156,14 @@ const Home = () => {
 
     return (
       data &&
-      data.data &&
-      data.data.data && (
+      data.data && (
         <React.Fragment>
-          <div>Islamic Prayer Times in Malaysia</div>
+          <div>
+            <h1>Islamic Prayer Times in Malaysia</h1>
+          </div>
           <div className="flex flex-col gap-3">
             <div className="flex flex-row gap-3">
-              <div>{data.data.data.place}</div>
+              <h2>{data.data.place}</h2>
             </div>
           </div>
           <div className="flex w-full flex-row flex-wrap justify-center">
@@ -172,7 +177,7 @@ const Home = () => {
               <div className="relative">
                 <select
                   onChange={(e) => {
-                    setSelectedState(e.target.value);
+                    setAddressState(e.target.value);
                     const selectedCityList =
                       Object.values(zon)[
                         Object.keys(zon).findIndex((i) => i === e.target.value)
@@ -180,8 +185,7 @@ const Home = () => {
                     setArrState(selectedCityList);
                   }}
                   value={
-                    selectedState ||
-                    helper.cityStateChecker(data.data.data.code)
+                    addressState || helper.cityStateChecker(data.data.code)
                   }
                   className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
                   id="grid-state"
@@ -198,7 +202,7 @@ const Home = () => {
 
                     return (
                       <option key={uuid()} value={z}>
-                        {newZ}
+                        {helper.capitalizeWords(newZ)}
                       </option>
                     );
                   })}
@@ -223,9 +227,9 @@ const Home = () => {
               </label>
               <div className="relative">
                 <select
-                  value={selectedCityCode}
+                  value={cityCode}
                   onChange={(e) => {
-                    setSelectedCityCode(e.target.value);
+                    setCityCode(e.target.value);
                     setInputVal({
                       ...inputVal,
                       code: e.target.value,
@@ -257,18 +261,27 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="flex flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
+          <div className="flex w-full flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
             <div className="flex w-full flex-row flex-wrap justify-between px-5">
               <div>{dayjs().format("DD MMMM YYYY")}</div>
               <button
                 type="button"
+                aria-label="Get Current location"
                 disabled={displayCoordsLoader}
                 onClick={getUserCurrentLocationHandler}
               >
-                {displayCoordsLoader ? "Loading" : "Get Current Location Icon"}
+                {displayCoordsLoader ? (
+                  "Loading"
+                ) : (
+                  <SVG
+                    src={icons.GetCurrentLocationSVG}
+                    height={25}
+                    width={25}
+                  />
+                )}
               </button>
             </div>
-            {data.data.data.times.map((prayerList) => {
+            {data.data.times.map((prayerList) => {
               return prayerList.map((prayer, index) => {
                 const prayerTime = dayjs(new Date(prayer * 1000));
 
@@ -276,12 +289,11 @@ const Home = () => {
                   return null;
                 }
                 return (
-                  <React.Fragment key={`${index}--${prayer * 1000}`}>
-                    <PrayerTimeCard
-                      index={index}
-                      time={prayerTime.format("DD-MM-YYYY@HH:mm A")}
-                    />
-                  </React.Fragment>
+                  <PrayerTimeCard
+                    key={`${index}--${prayer * 1000}`}
+                    index={index}
+                    time={prayerTime.format("DD-MM-YYYY@HH:mm A")}
+                  />
                 );
               });
             })}
@@ -289,7 +301,7 @@ const Home = () => {
           <div className="capitalize">
             <div className="flex gap-3">
               <div>Reference:</div>
-              <a href={updatedJakimLink}>{data.data.data.provider}</a>
+              <a href={updatedJakimLink}>{data.data.provider}</a>
             </div>
           </div>
         </React.Fragment>
@@ -298,11 +310,12 @@ const Home = () => {
   };
 
   return (
-    <Container>
-      <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-9">
+    <div className="container relative mx-auto min-h-[100vh]">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-10">
         {renderHomeContent()}
       </div>
-    </Container>
+      <Footer />
+    </div>
   );
 };
 

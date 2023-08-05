@@ -26,7 +26,7 @@ const cityStateChecker = (code: string): string => {
       return "kedah";
     case "ktn":
       return "kelantan";
-    case "melaka":
+    case "mlk":
       return "melaka";
     case "ngs":
       return "negeriSembilan";
@@ -51,7 +51,16 @@ const cityStateChecker = (code: string): string => {
   }
 };
 
+const capitalizeWords = (str: string): string => {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 export default {
   cityStateChecker,
   convertIndexToPrayerTitle,
+  capitalizeWords,
 };
