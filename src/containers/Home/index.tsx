@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
+import { motion } from "framer-motion";
 
 import Solat from "services/solat";
 
@@ -12,6 +13,7 @@ import { IGetPrayerTimeResponse } from "entities/solat";
 
 import helper from "utils/helper";
 import { zon } from "utils/placeholder";
+import Motion from "utils/motion";
 
 import icons from "assets/icons";
 
@@ -268,12 +270,16 @@ const Home = () => {
   };
 
   return (
-    <div className="container relative mx-auto min-h-[100vh]">
-      <div className="flex min-h-screen flex-col items-center justify-center gap-5 pb-10">
-        {renderHomeContent()}
-      </div>
+    <motion.div
+      className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5"
+      variants={Motion.staggerContainer(0.5, 0.5)}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: "all" }}
+    >
+      {renderHomeContent()}
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
