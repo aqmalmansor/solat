@@ -1,7 +1,6 @@
 import React from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
-import uuid from "react-uuid";
 import SVG from "react-inlinesvg";
 import { motion } from "framer-motion";
 
@@ -19,20 +18,16 @@ import icons from "assets/icons";
 
 import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
+import ScreenLoader from "components/ScreenLoader";
+import SelectBlocks from "./SelectBlocks";
 
 const Home = () => {
   const {
-    addressState,
-    setAddressState,
     userCoords,
     setUserCoords,
-    cityCode,
-    setCityCode,
     codeBasedSolatTimeApiParams,
-    setCodeBasedSolatTimeApiParams,
     coordsLoader,
     displayCoordsLoader,
-    arrAddressState,
     setArrAddressState,
     jakimResponse,
     setJakimResponse,
@@ -126,10 +121,6 @@ const Home = () => {
       return <div>No data</div>;
     }
 
-    if (getPrayerTimesBasedOnCodenameIsLoading) {
-      return <div>Loading...</div>;
-    }
-
     if (
       getPrayerTimesBasedOnCodenameIsError ||
       getPrayerTimesBasedOnCoordsIsError
@@ -144,109 +135,6 @@ const Home = () => {
 
     return (
       <React.Fragment>
-        <div>
-          <h1>Islamic Prayer Times in Malaysia</h1>
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-row gap-3">
-            <h2>{jakimResponse.place}</h2>
-          </div>
-        </div>
-        <div className="flex w-full flex-row flex-wrap justify-center">
-          <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-            <label
-              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-              htmlFor="grid-state"
-            >
-              State
-            </label>
-            <div className="relative">
-              <select
-                onChange={(e) => {
-                  setAddressState(e.target.value);
-                  const selectedCityList =
-                    Object.values(zon)[
-                      Object.keys(zon).findIndex((i) => i === e.target.value)
-                    ];
-                  setArrAddressState(selectedCityList);
-                }}
-                value={
-                  addressState || helper.cityStateChecker(jakimResponse.code)
-                }
-                className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                id="grid-state"
-              >
-                {Object.keys(zon).map((z) => {
-                  let newZ: string = z;
-                  if (z === "wilayah") {
-                    newZ = "Wilayah Persekutuan";
-                  } else if (z === "pulauPinang") {
-                    newZ = "Pulau Pinang";
-                  } else if (z === "negeriSembilan") {
-                    newZ = "Negeri Sembilan";
-                  }
-
-                  return (
-                    <option key={uuid()} value={z}>
-                      {helper.capitalizeWords(newZ)}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="h-4 w-4 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-          <div className="mb-3 w-full px-3 md:mb-0 md:w-1/2">
-            <label
-              className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
-              htmlFor="grid-city"
-            >
-              City
-            </label>
-            <div className="relative">
-              <select
-                value={cityCode}
-                onChange={(e) => {
-                  setCityCode(e.target.value);
-                  setCodeBasedSolatTimeApiParams({
-                    ...codeBasedSolatTimeApiParams,
-                    code: e.target.value,
-                  });
-                }}
-                className="block w-full appearance-none rounded border border-gray-200 bg-gray-200 px-4 py-3 pr-8 capitalize leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"
-                id="grid-city"
-              >
-                <option value="">Please select one of the option</option>
-                {arrAddressState.length > 0 &&
-                  arrAddressState.map((arr) => {
-                    return (
-                      <option key={uuid()} value={arr[1]}>
-                        {arr[0]}
-                      </option>
-                    );
-                  })}
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <svg
-                  className="h-4 w-4 fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div className="flex w-full flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
           <div className="flex w-full flex-row flex-wrap justify-between px-5">
             <div>{dayjs().format("DD MMMM YYYY")}</div>
@@ -270,16 +158,26 @@ const Home = () => {
   };
 
   return (
-    <motion.div
-      className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5"
-      variants={Motion.staggerContainer(0.5, 0.5)}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: "all" }}
-    >
+    <div className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5">
+      {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
+      <motion.div
+        variants={Motion.staggerContainer(0.3, 0.5)}
+        initial="hidden"
+        whileInView="show"
+        className="w-full"
+        viewport={{ once: true }}
+      >
+        <motion.div variants={Motion.textVariant(0.2)}>
+          <div className="flex flex-col gap-3 text-center">
+            <h1>Islamic Prayer Times in Malaysia</h1>
+            <h2>{jakimResponse?.place}</h2>
+          </div>
+        </motion.div>
+        <SelectBlocks />
+      </motion.div>
       {renderHomeContent()}
       <Footer />
-    </motion.div>
+    </div>
   );
 };
 
