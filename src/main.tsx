@@ -6,17 +6,16 @@ import { registerSW } from "virtual:pwa-register";
 import { ToastContainer, toast } from "react-toastify";
 
 import App from "./App.tsx";
+
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    // if (confirm("New content available. Refresh?")) {
     toast.info("New content available. Refresh?", {
       closeOnClick: true,
       onClick: () => updateSW(true),
     });
-
-    // }
   },
 });
 
