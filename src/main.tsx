@@ -11,7 +11,7 @@ import "./index.css";
 const updateSW = registerSW({
   onNeedRefresh() {
     // if (confirm("New content available. Refresh?")) {
-    toast.info("New content available. Click to Refresh", {
+    toast.info("New content available. Refresh?", {
       closeOnClick: true,
       onClick: () => updateSW(true),
     });
