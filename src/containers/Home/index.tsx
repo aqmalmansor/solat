@@ -120,12 +120,6 @@ const Home = () => {
   };
 
   const renderHomeContent = () => {
-    const jakimLink = jakimResponse?.attributes.jakim_source || "";
-    const updatedJakimLink = jakimLink.replace(
-      "period=duration",
-      "period=today"
-    );
-
     if (!jakimResponse) {
       return <div>No data</div>;
     }
@@ -269,10 +263,6 @@ const Home = () => {
           </div>
         </div>
         <PrayerCards />
-        <div className="flex w-full justify-center  gap-3 capitalize md:justify-end md:pr-10">
-          <div>Reference:</div>
-          <a href={updatedJakimLink}>{jakimResponse.provider}</a>
-        </div>
       </React.Fragment>
     );
   };

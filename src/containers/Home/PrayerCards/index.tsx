@@ -52,6 +52,10 @@ const PrayerCards = () => {
     return <div>No Data</div>;
   }
 
+  const jakimLink =
+    jakimResponse?.attributes.jakim_source ?? "javascript:void(0)";
+  const updatedJakimLink = jakimLink.replace("period=duration", "period=today");
+
   return (
     <div className="flex w-full flex-row flex-wrap content-center justify-between gap-5 md:justify-around">
       {Object.entries(todayPrayerTimes).map((item) => {
@@ -63,6 +67,10 @@ const PrayerCards = () => {
           />
         );
       })}
+      <div className="flex w-full justify-center  gap-3 capitalize md:justify-end md:pr-10">
+        <div>Reference:</div>
+        <a href={updatedJakimLink}>{jakimResponse?.provider}</a>
+      </div>
     </div>
   );
 };
