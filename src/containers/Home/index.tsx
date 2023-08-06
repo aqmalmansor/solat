@@ -158,26 +158,28 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5">
-      {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-      <motion.div
-        variants={Motion.staggerContainer(0.3, 0.5)}
-        initial="hidden"
-        whileInView="show"
-        className="w-full"
-        viewport={{ once: true }}
-      >
-        <motion.div variants={Motion.textVariant(0.2)}>
-          <div className="flex flex-col gap-3 text-center">
-            <h1>Islamic Prayer Times in Malaysia</h1>
-            <h2>{jakimResponse?.place}</h2>
-          </div>
+    <>
+      <div className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5">
+        {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
+        <motion.div
+          variants={Motion.staggerContainer(0.3, 0.5)}
+          initial="hidden"
+          whileInView="show"
+          className="w-full"
+          viewport={{ once: true }}
+        >
+          <motion.div variants={Motion.textVariant(0.2)}>
+            <div className="flex flex-col gap-3 text-center">
+              <h1>Islamic Prayer Times in Malaysia</h1>
+              <h2>{jakimResponse?.place}</h2>
+            </div>
+          </motion.div>
+          <SelectBlocks />
         </motion.div>
-        <SelectBlocks />
-      </motion.div>
-      {renderHomeContent()}
+        {renderHomeContent()}
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
