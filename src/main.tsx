@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    toast.info("New content available. Refresh?", {
+    toast.info("Click here for new content", {
       closeOnClick: true,
       onClick: () => updateSW(true),
     });
