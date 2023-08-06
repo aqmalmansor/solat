@@ -6,18 +6,17 @@ import SVG from "react-inlinesvg";
 
 import Solat from "services/solat";
 
-import { IGetPrayerTimeResponse } from "entities/solat";
+import { useSolatStore } from "store/solat";
 
-import PrayerTimeCard from "components/PrayerTimeCard";
-import Footer from "./Footer";
+import { IGetPrayerTimeResponse } from "entities/solat";
 
 import helper from "utils/helper";
 import { zon } from "utils/placeholder";
 
 import icons from "assets/icons";
 
-import { useSolatStore } from "store/solat";
 import PrayerCards from "./PrayerCards";
+import Footer from "./Footer";
 
 const Home = () => {
   const {
