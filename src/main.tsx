@@ -12,9 +12,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    toast.info("Click here for new content", {
+    toast.onChange(() => updateSW(true));
+    toast.info("Click Here For New Content", {
       closeOnClick: true,
-      onClick: () => updateSW(true),
+      theme: "colored",
     });
   },
 });
@@ -36,7 +37,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
-        <ToastContainer />
+        <ToastContainer limit={1} />
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>
