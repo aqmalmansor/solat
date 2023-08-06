@@ -565,10 +565,10 @@ const manifestPlugin: Partial<VitePWAOptions> = {
   includeAssets: ["**/*"],
   manifest: {
     name: "Malaysian Prayer Times",
-    short_name: "Malaysian Prayer Times",
+    short_name: "SolatMY",
     description: "Prayer Times Checker in Malaysia",
-    theme_color: "#111111",
-    background_color: "#111111",
+    theme_color: "#FFF",
+    background_color: "#FFF",
     display: "standalone",
     scope: "/",
     start_url: "/",
