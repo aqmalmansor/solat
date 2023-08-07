@@ -29,14 +29,13 @@ export interface IGetPrayerTimeResponse {
     provider: string;
     month: number;
     year: number;
-    times: [[number]];
+    times: [[number, number, number, number, number, number]];
   };
 }
 
 export enum SolatEnum {
-  none,
-  imsak,
   subuh,
+  syuruk,
   zohor,
   asar,
   maghrib,
@@ -44,8 +43,8 @@ export enum SolatEnum {
 }
 
 export interface ICompulsaryPrayer {
-  imsak: string;
   subuh: string;
+  syuruk: string;
   zohor: string;
   asar: string;
   maghrib: string;

@@ -2,16 +2,21 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import App from "./App.tsx";
-import "./index.css";
-
 import { registerSW } from "virtual:pwa-register";
+import { ToastContainer, toast } from "react-toastify";
+
+import App from "./App.tsx";
+
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("New content available. Refresh?")) {
-      updateSW(true);
-    }
+    toast.onChange(() => updateSW(true));
+    toast.info("Click Here For New Content", {
+      closeOnClick: true,
+      theme: "colored",
+    });
   },
 });
 
@@ -32,6 +37,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <App />
+        <ToastContainer limit={1} />
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>

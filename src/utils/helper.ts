@@ -32,6 +32,8 @@ const cityStateChecker = (code: string): string => {
       return "negeriSembilan";
     case "phg":
       return "pahang";
+    case "prk":
+      return "perak";
     case "pls":
       return "perlis";
     case "png":
