@@ -18,6 +18,12 @@ const updateSW = registerSW({
       theme: "colored",
     });
   },
+  onOfflineReady() {
+    toast.success("You are Offline", {
+      closeOnClick: true,
+      theme: "colored",
+    });
+  },
 });
 
 const queryClient = new QueryClient({
