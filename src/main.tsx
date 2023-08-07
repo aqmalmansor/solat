@@ -19,10 +19,7 @@ const updateSW = registerSW({
     });
   },
   onOfflineReady() {
-    toast.success("You are Offline", {
-      closeOnClick: true,
-      theme: "colored",
-    });
+    alert("offline ready");
   },
 });
 
