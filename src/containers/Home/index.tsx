@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import SVG from "react-inlinesvg";
@@ -18,13 +18,30 @@ import Motion from "utils/motion";
 
 import icons from "assets/icons";
 
+import ScreenLoader from "components/ScreenLoader";
+import Flex from "components/Flex";
 import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
-import ScreenLoader from "components/ScreenLoader";
 import SelectBlocks from "./SelectBlocks";
-import Flex from "components/Flex";
+import InstallPWA from "./Button/InstallPWA";
 
+declare global {
+  interface Navigator {
+    standalone?: boolean;
+  }
+}
 const Home = () => {
+  const [isPWA, setIsPWA] = useState<boolean>(false);
+
+  useEffect(() => {
+    if ("navigator" in window && "standalone" in window.navigator) {
+      if (window.navigator.standalone) {
+        setIsPWA(window.navigator.standalone);
+        alert("s");
+      }
+    }
+  }, []);
+
   const {
     userCoords,
     setUserCoords,
@@ -167,10 +184,10 @@ const Home = () => {
         gap={SPACING.small}
         align={ALIGN_ITEMS.center}
         justify={JUSTIFY_CONTENT.center}
-        salt="min-h-[95vh] container mx-auto"
+        salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-
+        {isPWA && <InstallPWA />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
