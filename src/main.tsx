@@ -18,9 +18,6 @@ const updateSW = registerSW({
       theme: "colored",
     });
   },
-  onOfflineReady() {
-    alert("Testing offline mode");
-  },
 });
 
 const queryClient = new QueryClient({
