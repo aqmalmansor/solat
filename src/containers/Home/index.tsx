@@ -37,7 +37,6 @@ const Home = () => {
     if ("navigator" in window && "standalone" in window.navigator) {
       if (window.navigator.standalone) {
         setIsPWA(window.navigator.standalone);
-        alert("s");
       }
     }
   }, []);
@@ -187,7 +186,7 @@ const Home = () => {
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {isPWA && <InstallPWA />}
+        {!isPWA && <InstallPWA />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
