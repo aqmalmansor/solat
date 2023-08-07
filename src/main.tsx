@@ -10,6 +10,26 @@ import App from "./App.tsx";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 
+const displayOfflinePage = () => {
+  const offlineFallbackPage = document.createElement("div");
+  offlineFallbackPage.innerHTML = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Offline</title>
+      </head>
+      <body>
+        <h1>Offline</h1>
+        <p>You are currently offline. Please check your internet connection.</p>
+      </body>
+      </html>
+    `;
+
+  document.body.appendChild(offlineFallbackPage);
+};
+
 const updateSW = registerSW({
   onNeedRefresh() {
     toast.onChange(() => updateSW(true));
@@ -17,6 +37,9 @@ const updateSW = registerSW({
       closeOnClick: true,
       theme: "colored",
     });
+  },
+  onOfflineReady() {
+    displayOfflinePage();
   },
 });
 
