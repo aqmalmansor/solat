@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import SVG from "react-inlinesvg";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 import Solat from "services/solat";
 
@@ -33,11 +34,10 @@ const Home = () => {
     setJakimResponse,
   } = useSolatStore();
 
-  const {
-    isLoading: getPrayerTimesBasedOnCodenameIsLoading,
-    isError: getPrayerTimesBasedOnCodenameIsError,
-    error: getPrayerTimesBasedOnCodenameError,
-  } = useQuery<IGetPrayerTimeResponse, Error>(
+  const { isLoading: getPrayerTimesBasedOnCodenameIsLoading } = useQuery<
+    IGetPrayerTimeResponse,
+    Error
+  >(
     ["getPrayerTimeBasedOnCodenameQuery", codeBasedSolatTimeApiParams],
     async () => await Solat.basedOnCodename(codeBasedSolatTimeApiParams),
     {
@@ -52,13 +52,13 @@ const Home = () => {
         );
         if (coordsLoader) displayCoordsLoader(false);
       },
+      onError: (err) => {
+        toast.error(err.message);
+      },
     }
   );
 
-  const {
-    isError: getPrayerTimesBasedOnCoordsIsError,
-    error: getPrayerTimesBasedOnCoordsError,
-  } = useQuery<IGetPrayerTimeResponse, Error>(
+  useQuery<IGetPrayerTimeResponse, Error>(
     ["getPrayerTimeBasedOnCoordsQuery", userCoords],
     async () => await Solat.basedOnCoords(userCoords),
     {
@@ -75,6 +75,9 @@ const Home = () => {
       },
       onSettled: () => {
         displayCoordsLoader(false);
+      },
+      onError: (err) => {
+        toast.error(err.message);
       },
     }
   );
@@ -119,18 +122,6 @@ const Home = () => {
   const renderHomeContent = () => {
     if (!jakimResponse) {
       return <div>No data</div>;
-    }
-
-    if (
-      getPrayerTimesBasedOnCodenameIsError ||
-      getPrayerTimesBasedOnCoordsIsError
-    ) {
-      return (
-        <div>
-          {getPrayerTimesBasedOnCodenameError?.message.toString() ||
-            getPrayerTimesBasedOnCoordsError?.message.toString()}
-        </div>
-      );
     }
 
     return (
