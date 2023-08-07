@@ -10,6 +10,7 @@ import Solat from "services/solat";
 import { useSolatStore } from "store/solat";
 
 import { IGetPrayerTimeResponse } from "entities/solat";
+import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
 import helper from "utils/helper";
 import { zon } from "utils/placeholder";
@@ -22,7 +23,6 @@ import Footer from "./Footer";
 import ScreenLoader from "components/ScreenLoader";
 import SelectBlocks from "./SelectBlocks";
 import Flex from "components/Flex";
-import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
 const Home = () => {
   const {
@@ -128,7 +128,12 @@ const Home = () => {
 
     return (
       <React.Fragment>
-        <Flex fill justify={JUSTIFY_CONTENT.between} gap={SPACING.small}>
+        <Flex
+          fill
+          justify={JUSTIFY_CONTENT.between}
+          gap={SPACING.small}
+          noPadding
+        >
           <div>{dayjs().format("DD MMMM YYYY")}</div>
           <button
             type="button"
@@ -166,10 +171,12 @@ const Home = () => {
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
 
-        <motion.div>
+        <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
             gap={SPACING.small}
+            xPadding={SPACING.none}
+            yPadding={SPACING.extraSmall}
             direction="column"
             salt="text-center"
           >

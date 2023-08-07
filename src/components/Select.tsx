@@ -11,7 +11,7 @@ const Select = ({
   options,
 }: SelectComponentProps): JSX.Element => {
   return (
-    <div className="mb-3 w-full px-3 md:mb-0">
+    <div className="mb-3 w-full md:mb-0">
       <label
         className="mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700"
         htmlFor="grid-state"

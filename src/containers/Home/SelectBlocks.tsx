@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
-import { useSolatStore } from "store/solat";
 import uuid from "react-uuid";
+
+import { useSolatStore } from "store/solat";
 
 import helper from "utils/helper";
 import Motion from "utils/motion";
 import { zon } from "utils/placeholder";
 import Select from "components/Select";
+import Flex from "components/Flex";
+
+import { JUSTIFY_CONTENT } from "entities/tailwind";
 
 const SelectBlocks = () => {
   const {
@@ -19,10 +23,14 @@ const SelectBlocks = () => {
     setCodeBasedSolatTimeApiParams,
     codeBasedSolatTimeApiParams,
   } = useSolatStore();
-  // --State
 
   return (
-    <div className="mt-5 flex w-full flex-row flex-wrap justify-center">
+    <Flex
+      noPadding
+      fill
+      justify={JUSTIFY_CONTENT.center}
+      salt="flex-wrap md:flex-nowrap"
+    >
       <div className="basis-full md:basis-1/2">
         <motion.div variants={Motion.slideIn("left", "smooth", 0.5, 1)}>
           <Select
@@ -85,7 +93,7 @@ const SelectBlocks = () => {
           />
         </motion.div>
       </div>
-    </div>
+    </Flex>
   );
 };
 

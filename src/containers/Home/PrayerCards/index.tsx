@@ -7,6 +7,9 @@ import { useSolatStore } from "store/solat";
 import helper from "utils/helper";
 
 import Card from "./Card";
+import Flex from "components/Flex";
+
+import { JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
 const PrayerCards = () => {
   const {
@@ -57,7 +60,13 @@ const PrayerCards = () => {
   const updatedJakimLink = jakimLink.replace("period=duration", "period=today");
 
   return (
-    <div className="flex w-full flex-row flex-wrap content-center justify-between gap-5 md:justify-around">
+    <Flex
+      fill
+      noPadding
+      salt="flex-wrap"
+      gap={SPACING.small}
+      justify={JUSTIFY_CONTENT.between}
+    >
       {Object.entries(todayPrayerTimes).map((item) => {
         return (
           <Card
@@ -71,7 +80,7 @@ const PrayerCards = () => {
         <div>Reference:</div>
         <a href={updatedJakimLink}>{jakimResponse?.provider}</a>
       </div>
-    </div>
+    </Flex>
   );
 };
 
