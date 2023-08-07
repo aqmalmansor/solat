@@ -21,6 +21,8 @@ import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
 import ScreenLoader from "components/ScreenLoader";
 import SelectBlocks from "./SelectBlocks";
+import Flex from "components/Flex";
+import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
 const Home = () => {
   const {
@@ -126,51 +128,60 @@ const Home = () => {
 
     return (
       <React.Fragment>
-        <div className="flex w-full flex-row flex-wrap content-center justify-center gap-5 md:justify-around">
-          <div className="flex w-full flex-row flex-wrap justify-between px-5">
-            <div>{dayjs().format("DD MMMM YYYY")}</div>
-            <button
-              type="button"
-              aria-label="Get Current location"
-              disabled={coordsLoader}
-              onClick={getUserCurrentLocationHandler}
-            >
-              {coordsLoader ? (
-                "Loading"
-              ) : (
-                <SVG src={icons.GetCurrentLocationSVG} height={25} width={25} />
-              )}
-            </button>
-          </div>
-        </div>
+        <Flex fill justify={JUSTIFY_CONTENT.between} gap={SPACING.small}>
+          <div>{dayjs().format("DD MMMM YYYY")}</div>
+          <button
+            type="button"
+            aria-label="Get Current location"
+            disabled={coordsLoader}
+            onClick={getUserCurrentLocationHandler}
+          >
+            {coordsLoader ? (
+              "Loading"
+            ) : (
+              <SVG src={icons.GetCurrentLocationSVG} height={25} width={25} />
+            )}
+          </button>
+        </Flex>
         <PrayerCards />
       </React.Fragment>
     );
   };
 
   return (
-    <>
-      <div className="container mx-auto flex min-h-[100vh] w-full flex-col items-center justify-center gap-5">
+    <motion.div
+      variants={Motion.staggerContainer(0.3, 0.5)}
+      initial="hidden"
+      whileInView="show"
+      className="w-full"
+      viewport={{ once: true }}
+    >
+      <Flex
+        fill
+        direction="column"
+        gap={SPACING.small}
+        align={ALIGN_ITEMS.center}
+        justify={JUSTIFY_CONTENT.center}
+        salt="min-h-[95vh] container mx-auto"
+      >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        <motion.div
-          variants={Motion.staggerContainer(0.3, 0.5)}
-          initial="hidden"
-          whileInView="show"
-          className="w-full"
-          viewport={{ once: true }}
-        >
-          <motion.div variants={Motion.textVariant(0.2)}>
-            <div className="flex flex-col gap-3 text-center">
-              <h1>Islamic Prayer Times in Malaysia</h1>
-              <h2>{jakimResponse?.place}</h2>
-            </div>
-          </motion.div>
-          <SelectBlocks />
+
+        <motion.div>
+          <Flex
+            justify={JUSTIFY_CONTENT.center}
+            gap={SPACING.small}
+            direction="column"
+            salt="text-center"
+          >
+            <h1>Islamic Prayer Times in Malaysia</h1>
+            <h2>{jakimResponse?.place}</h2>
+          </Flex>
         </motion.div>
+        <SelectBlocks />
         {renderHomeContent()}
-      </div>
+      </Flex>
       <Footer />
-    </>
+    </motion.div>
   );
 };
 
