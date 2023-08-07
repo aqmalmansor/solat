@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 import Routes from "../navigation/Routes";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const AppRoot = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
