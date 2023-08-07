@@ -84,7 +84,7 @@ export const zon = {
     ["Belum", "prk-3"],
     ["Beruas", "prk-4"],
     ["Bukit Larut", "prk-5"],
-    ["Grik", "prk-6"],
+    ["Gerik", "prk-6"],
     ["Ipoh", "prk-7"],
     ["Kampar", "prk-8"],
     ["Kampung Gajah", "prk-9"],
