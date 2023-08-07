@@ -562,7 +562,10 @@ const manifestPlugin: Partial<VitePWAOptions> = {
   workbox: {
     globPatterns: ["**/*"],
   },
-  includeAssets: ["**/*"],
+  includeAssets: [
+    "**/*",
+    { from: "./public/offline.html", to: "./offline.html" },
+  ],
   manifest: {
     name: "Malaysian Prayer Times",
     short_name: "SolatMY",
