@@ -96,6 +96,7 @@ const Home = () => {
       },
       onError: (err) => {
         toast.error(err.message);
+        displayCoordsLoader(false);
       },
     }
   );

@@ -39,7 +39,7 @@ const InstallPWA = (): JSX.Element => {
         if (choiceResult.outcome === "accepted") {
           console.log("The app was added to the home screen");
         } else {
-          console.log("The app was not added to the home screen");
+          alert("The app was not added to the home screen");
         }
       });
     }
