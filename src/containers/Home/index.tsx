@@ -12,7 +12,7 @@ import { useSolatStore } from "store/solat";
 import { IGetPrayerTimeResponse } from "entities/solat";
 import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
-import helper from "utils/helper";
+import helper, { platforms } from "utils/helper";
 import { zon } from "utils/placeholder";
 import Motion from "utils/motion";
 
@@ -32,14 +32,37 @@ declare global {
 }
 const Home = () => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
+  const [manualInstall, setManualInstall] = useState<boolean>(false);
+  const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
+  const platform = helper.getPlatform();
+
 
   useEffect(() => {
-    if ("navigator" in window && "standalone" in window.navigator) {
-      if (window.navigator.standalone) {
-        setIsPWA(window.navigator.standalone);
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then(() => {
+          console.log('service worker ready')
+          setServiceWorkerReady(true);
+        })
+        .catch(error => {
+          console.error('Error getting service worker ready:', error);
+        });
+    }
+  }, [navigator.serviceWorker]);
+  
+
+  useEffect(() => {
+    if(serviceWorkerReady){
+      if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
+        if (platform !== platforms.OTHER) {
+          setIsPWA(true);
+          if (platform !== platforms.NATIVE) setManualInstall(true);
+        }
+      } else {
+        setIsPWA(false)
       }
     }
-  }, []);
+  }, [serviceWorkerReady]);
 
   const {
     userCoords,
@@ -187,7 +210,7 @@ const Home = () => {
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {!isPWA && <InstallPWA />}
+        {isPWA === false && serviceWorkerReady && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
