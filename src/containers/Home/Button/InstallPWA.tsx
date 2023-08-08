@@ -60,6 +60,8 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
             setIsLoading(false);
             alert(`Error ${err.message}`)
           });
+      } else {
+        setIsLoading(false);
       }
     } else {
       // displayModal
