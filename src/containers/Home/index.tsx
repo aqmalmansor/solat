@@ -33,24 +33,22 @@ declare global {
 const Home = () => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
   const [manualInstall, setManualInstall] = useState<boolean>(false);
-  const [currentPlatform, setCurrentPlatform] = useState<string>(platforms.OTHER);
   
   const platform = helper.getPlatform();
 
   useEffect(() => {
     alert(platform)
-    if ("navigator" in window && "standalone" in window.navigator) {
+      if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
+        alert('pwa')
       if (window.navigator.standalone) {
-        alert('lol pwa')
         if (platform !== platforms.OTHER) {
-          alert(currentPlatform)
-          setCurrentPlatform(platform)
           setIsPWA(window.navigator.standalone);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
       } 
     } else {
-      alert('not pwa')
+      setIsPWA(false)
+      alert('not a pwa')
     }
   }, []);
 
