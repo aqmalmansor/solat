@@ -23,6 +23,7 @@ interface InstallPWAProps {
 
 const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const handler = (event: BeforeInstallPromptEvent) => {
@@ -37,6 +38,7 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   }, []);
 
   const handleAddToHomeScreenClick = () => {
+    setIsLoading(true);
     if (!manualInstall) {
       if (prompt) {
         prompt.prompt();
@@ -44,12 +46,15 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
           .then((choiceResult) => {
             if (choiceResult.outcome === "accepted") {
               console.log("The app was added to the home screen");
+              setIsLoading(false);
             } else {
               alert("The app was not added to the home screen");
+              setIsLoading(false);
             }
           })
           .catch((err) => {
             toast.error(err.message);
+            setIsLoading(false);
           });
       }
     } else {
@@ -57,12 +62,13 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
       toast.success(
         "Trigger modal to display the info on how to install the app across different browsers"
       );
+      setIsLoading(false);
     }
   };
 
   return (
     <Button
-      label="Install App"
+      label={ isLoading ? 'Installing':  "Install App"}
       onClick={handleAddToHomeScreenClick}
       type="absolute top-[.5rem] left-[1.4rem] bg-secondary text-white text-[.6rem] px-3 py-[.5rem]"
     />
