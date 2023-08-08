@@ -34,11 +34,14 @@ const Home = () => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
   const [manualInstall, setManualInstall] = useState<boolean>(false);
   const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
+  const platform = helper.getPlatform();
+
 
   useEffect(() => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready
         .then(() => {
+          console.log('service worker ready')
           setServiceWorkerReady(true);
         })
         .catch(error => {
@@ -47,7 +50,6 @@ const Home = () => {
     }
   }, [navigator.serviceWorker]);
   
-  const platform = helper.getPlatform();
 
   useEffect(() => {
     if(serviceWorkerReady){
@@ -56,11 +58,10 @@ const Home = () => {
           setIsPWA(true);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
-    } else {
-      setIsPWA(false)
+      } else {
+        setIsPWA(false)
+      }
     }
-  }
-
   }, [serviceWorkerReady]);
 
   const {
