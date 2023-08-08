@@ -49,9 +49,7 @@ const InstallPWA = (): JSX.Element => {
     <Button
       label="Install App"
       onClick={handleAddToHomeScreenClick}
-      type={
-        "absolute top-[.5rem] left-[1.4rem] bg-secondary text-white text-[.6rem] px-3 py-[.5rem] "
-      }
+      type="absolute top-[.5rem] left-[1.4rem] bg-secondary text-white text-[.6rem] px-3 py-[.5rem]"
     />
   );
 };
