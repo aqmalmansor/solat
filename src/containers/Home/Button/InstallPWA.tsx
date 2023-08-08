@@ -1,5 +1,6 @@
 import Button from "components/Button";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -16,7 +17,11 @@ declare global {
   }
 }
 
-const InstallPWA = (): JSX.Element => {
+interface InstallPWAProps {
+  manualInstall: boolean;
+}
+
+const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
@@ -32,16 +37,23 @@ const InstallPWA = (): JSX.Element => {
   }, []);
 
   const handleAddToHomeScreenClick = () => {
-    if (prompt) {
-      prompt.prompt();
-
-      prompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === "accepted") {
-          console.log("The app was added to the home screen");
-        } else {
-          alert("The app was not added to the home screen");
-        }
-      });
+    if (manualInstall) {
+      if (prompt) {
+        prompt.prompt();
+        prompt.userChoice
+          .then((choiceResult) => {
+            if (choiceResult.outcome === "accepted") {
+              console.log("The app was added to the home screen");
+            } else {
+              alert("The app was not added to the home screen");
+            }
+          })
+          .catch((err) => {
+            toast.error(err.message);
+          });
+      }
+    } else {
+      // displayModal
     }
   };
 

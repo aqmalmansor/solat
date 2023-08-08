@@ -12,7 +12,7 @@ import { useSolatStore } from "store/solat";
 import { IGetPrayerTimeResponse } from "entities/solat";
 import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
-import helper from "utils/helper";
+import helper, { platforms } from "utils/helper";
 import { zon } from "utils/placeholder";
 import Motion from "utils/motion";
 
@@ -32,11 +32,16 @@ declare global {
 }
 const Home = () => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
+  const [manualInstall, setManualInstall] = useState<boolean>(false);
 
   useEffect(() => {
     if ("navigator" in window && "standalone" in window.navigator) {
       if (window.navigator.standalone) {
-        setIsPWA(window.navigator.standalone);
+        const platform = helper.getPlatform();
+        if (platform !== platforms.OTHER) {
+          if (platform !== platforms.NATIVE) setManualInstall(true);
+          setIsPWA(window.navigator.standalone);
+        }
       }
     }
   }, []);
@@ -187,7 +192,7 @@ const Home = () => {
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {!isPWA && <InstallPWA />}
+        {!isPWA && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
