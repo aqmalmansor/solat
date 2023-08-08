@@ -29,7 +29,6 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
     const handler = (event: BeforeInstallPromptEvent) => {
       setPrompt(event);
     };
-
     window.addEventListener("beforeinstallprompt", handler);
 
     return () => {
@@ -38,8 +37,7 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   }, []);
 
   const handleAddToHomeScreenClick = () => {
-    setIsLoading(true);
-    if (!manualInstall) {
+      setIsLoading(true);
       alert('not manual install')
       if (prompt) {
         alert('prompting')
@@ -62,15 +60,12 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
           });
       } else {
         setIsLoading(false);
+        if(manualInstall){
+          toast.success(
+            "Trigger modal to display the info on how to install the app across different browsers"
+          );
+        }
       }
-    } else {
-      // displayModal
-      toast.success(
-        "Trigger modal to display the info on how to install the app across different browsers"
-      );
-      alert('manual install')
-      setIsLoading(false);
-    }
   };
 
   return (
