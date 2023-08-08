@@ -39,9 +39,10 @@ const Home = () => {
       if (window.navigator.standalone) {
         const platform = helper.getPlatform();
         if (platform !== platforms.OTHER) {
+          console.log('test')
+          setIsPWA(window.navigator.standalone);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
-        setIsPWA(window.navigator.standalone);
       }
     }
   }, []);
