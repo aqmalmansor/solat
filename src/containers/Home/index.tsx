@@ -40,8 +40,8 @@ const Home = () => {
         const platform = helper.getPlatform();
         if (platform !== platforms.OTHER) {
           if (platform !== platforms.NATIVE) setManualInstall(true);
-          setIsPWA(window.navigator.standalone);
         }
+        setIsPWA(window.navigator.standalone);
       }
     }
   }, []);
