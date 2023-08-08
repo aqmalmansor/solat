@@ -37,7 +37,7 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   }, []);
 
   const handleAddToHomeScreenClick = () => {
-    if (manualInstall) {
+    if (!manualInstall) {
       if (prompt) {
         prompt.prompt();
         prompt.userChoice
