@@ -37,7 +37,7 @@ const Home = () => {
 
   useEffect(() => {
     const platform = helper.getPlatform();
-    console.log(platform)
+    console.log(currentPlatform)
     if ("navigator" in window && "standalone" in window.navigator) {
       if (window.navigator.standalone) {
         if (platform !== platforms.OTHER) {
