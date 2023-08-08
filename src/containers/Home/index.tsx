@@ -195,7 +195,7 @@ const Home = () => {
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {!isPWA && <InstallPWA manualInstall={manualInstall} />}
+        {isPWA === false && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
