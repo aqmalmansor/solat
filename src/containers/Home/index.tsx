@@ -45,7 +45,6 @@ const Home = () => {
         }
     } else {
       setIsPWA(false)
-      alert('not a pwa')
     }
   }, []);
 
