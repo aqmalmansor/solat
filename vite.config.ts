@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
-// PWA Note: use pwabuilder.com/imageGenerator to build your manifest images
 const pwaIcons = [
   {
     src: "windows11/SmallTile.scale-100.png",

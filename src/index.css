@@ -11,3 +11,11 @@ body {
 body {
   position: relative;
 }
+
+@layer base {
+  :root {
+    --color-primary: 255 115 179;
+    --color-secondary: 111 114 185;
+    --color-tertiary: 227 45 44;
+  }
+}

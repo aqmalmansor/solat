@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import SVG from "react-inlinesvg";
@@ -12,19 +12,58 @@ import { useSolatStore } from "store/solat";
 import { IGetPrayerTimeResponse } from "entities/solat";
 import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
-import helper from "utils/helper";
+import helper, { platforms } from "utils/helper";
 import { zon } from "utils/placeholder";
 import Motion from "utils/motion";
 
 import icons from "assets/icons";
 
+import ScreenLoader from "components/ScreenLoader";
+import Flex from "components/Flex";
 import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
-import ScreenLoader from "components/ScreenLoader";
 import SelectBlocks from "./SelectBlocks";
-import Flex from "components/Flex";
+import InstallPWA from "./Button/InstallPWA";
 
+declare global {
+  interface Navigator {
+    standalone?: boolean;
+  }
+}
 const Home = () => {
+  const [isPWA, setIsPWA] = useState<boolean>(false);
+  const [manualInstall, setManualInstall] = useState<boolean>(false);
+  const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
+  const platform = helper.getPlatform();
+
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then(() => {
+          console.log('service worker ready')
+          setServiceWorkerReady(true);
+        })
+        .catch(error => {
+          console.error('Error getting service worker ready:', error);
+        });
+    }
+  }, [navigator.serviceWorker]);
+  
+
+  useEffect(() => {
+    if(serviceWorkerReady){
+      if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
+        if (platform !== platforms.OTHER) {
+          setIsPWA(true);
+          if (platform !== platforms.NATIVE) setManualInstall(true);
+        }
+      } else {
+        setIsPWA(false)
+      }
+    }
+  }, [serviceWorkerReady]);
+
   const {
     userCoords,
     setUserCoords,
@@ -80,6 +119,7 @@ const Home = () => {
       },
       onError: (err) => {
         toast.error(err.message);
+        displayCoordsLoader(false);
       },
     }
   );
@@ -167,10 +207,10 @@ const Home = () => {
         gap={SPACING.small}
         align={ALIGN_ITEMS.center}
         justify={JUSTIFY_CONTENT.center}
-        salt="min-h-[95vh] container mx-auto"
+        salt="min-h-[95vh] container mx-auto relative pt-12"
       >
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-
+        {isPWA === false && serviceWorkerReady && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
