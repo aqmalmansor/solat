@@ -12,10 +12,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    toast.onChange(() => updateSW(true));
     toast.info("Click Here For New Content", {
       closeOnClick: true,
       theme: "colored",
+      onClick: () => updateSW(true)
     });
   },
 });
