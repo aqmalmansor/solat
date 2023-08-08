@@ -3,42 +3,26 @@ import react from "@vitejs/plugin-react";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 
-// {
-//   src: "windows11/SmallTile.scale-100.png",
-//   sizes: "71x71",
-//   purpose: "any maskable",
-// },
-// {
-//   src: "windows11/SmallTile.scale-125.png",
-//   sizes: "89x89",
-//   purpose: "any maskable",
-// },
-
 const pwaIcons = [
   {
   src: "icons/16.png",
   sizes: "16x16",
-  purpose: "any maskable",
 },
 {
   src: "icons/32.png",
   sizes: "32x32",
-  purpose: "any maskable",
 },
 {
   src: "icons/64.png",
   sizes: "64x64",
-  purpose: "any maskable",
 },
 {
   src: "icons/128.png",
   sizes: "128x128",
-  purpose: "any maskable",
 },
 {
   src: "icons/256.png",
   sizes: "256x256",
-  purpose: "any maskable",
 },
 {
   src: "icons/512.png",
