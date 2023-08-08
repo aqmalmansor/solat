@@ -54,6 +54,9 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
       }
     } else {
       // displayModal
+      toast.success(
+        "Trigger modal to display the info on how to install the app across different browsers"
+      );
     }
   };
 
