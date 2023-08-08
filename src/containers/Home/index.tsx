@@ -48,9 +48,9 @@ const Home = () => {
           setIsPWA(window.navigator.standalone);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
-      } else {
-        alert('not pwa')
-      }
+      } 
+    } else {
+      alert('not pwa')
     }
   }, []);
 
