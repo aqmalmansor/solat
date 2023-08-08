@@ -39,13 +39,10 @@ const Home = () => {
   useEffect(() => {
     alert(platform)
       if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
-        alert('pwa')
-      if (window.navigator.standalone) {
         if (platform !== platforms.OTHER) {
-          setIsPWA(window.navigator.standalone);
+          setIsPWA(true);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
-      } 
     } else {
       setIsPWA(false)
       alert('not a pwa')
