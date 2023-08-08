@@ -38,30 +38,26 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
 
   const handleAddToHomeScreenClick = () => {
       setIsLoading(true);
-      alert('not manual install')
       if (prompt) {
         alert('prompting')
         prompt.prompt();
         prompt.userChoice
           .then((choiceResult) => {
             if (choiceResult.outcome === "accepted") {
-              console.log("The app was added to the home screen");
-              setIsLoading(false);
+              toast.success("The app was added to the home screen");
             } else {
-              alert("The app was not added to the home screen");
-              setIsLoading(false);
+              toast.error("The app was not added to the home screen");
             }
-            alert('user choice')
+            setIsLoading(false);
           })
           .catch((err) => {
             toast.error(err.message);
             setIsLoading(false);
-            alert(`Error ${err.message}`)
           });
       } else {
         setIsLoading(false);
         if(manualInstall){
-          toast.success(
+          toast.info(
             "Trigger modal to display the info on how to install the app across different browsers"
           );
         }
