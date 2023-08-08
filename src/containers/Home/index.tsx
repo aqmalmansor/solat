@@ -33,11 +33,24 @@ declare global {
 const Home = () => {
   const [isPWA, setIsPWA] = useState<boolean>(false);
   const [manualInstall, setManualInstall] = useState<boolean>(false);
+  const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
+
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready
+        .then(() => {
+          setServiceWorkerReady(true);
+        })
+        .catch(error => {
+          console.error('Error getting service worker ready:', error);
+        });
+    }
+  }, [navigator.serviceWorker]);
   
   const platform = helper.getPlatform();
 
   useEffect(() => {
-    alert(platform)
+    if(serviceWorkerReady){
       if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
         if (platform !== platforms.OTHER) {
           setIsPWA(true);
@@ -46,7 +59,9 @@ const Home = () => {
     } else {
       setIsPWA(false)
     }
-  }, []);
+  }
+
+  }, [serviceWorkerReady]);
 
   const {
     userCoords,
