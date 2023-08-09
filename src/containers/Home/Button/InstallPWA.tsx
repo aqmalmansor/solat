@@ -38,6 +38,7 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
 
   const handleAddToHomeScreenClick = () => {
       setIsLoading(true);
+      alert('trigger add to homescreen handler')
       if (prompt) {
         alert('prompting')
         prompt.prompt();
@@ -55,6 +56,8 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
             setIsLoading(false);
           });
       } else {
+        alert('no prompt')
+        alert(`manual install value ${manualInstall}`)
         setIsLoading(false);
         if(manualInstall){
           toast.info(
