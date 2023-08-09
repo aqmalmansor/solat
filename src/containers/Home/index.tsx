@@ -24,6 +24,8 @@ import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
 import SelectBlocks from "./SelectBlocks";
 import InstallPWA from "./Button/InstallPWA";
+import { useUIStore } from "store/ui";
+import HowToInstall from "./Modal/HowToInstall";
 
 declare global {
   interface Navigator {
@@ -76,6 +78,11 @@ const Home = () => {
     jakimResponse,
     setJakimResponse,
   } = useSolatStore();
+
+  const {
+    insallationGuideModalIsOpen
+  } = useUIStore()
+
 
   const { isLoading: getPrayerTimesBasedOnCodenameIsLoading } = useQuery<
     IGetPrayerTimeResponse,
@@ -211,6 +218,8 @@ const Home = () => {
         justify={JUSTIFY_CONTENT.center}
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
+       
+        {insallationGuideModalIsOpen && <HowToInstall />} {/* PWA Installation Guide Modal */}
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
         {isPWA === false && serviceWorkerReady && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>

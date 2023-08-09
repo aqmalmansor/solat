@@ -1,6 +1,7 @@
 import Button from "components/Button";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useUIStore } from "store/ui";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -24,6 +25,8 @@ interface InstallPWAProps {
 const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { setInstallationGuideModalOpen } = useUIStore()
 
   useEffect(() => {
     const handler = (event: BeforeInstallPromptEvent) => {
@@ -62,9 +65,7 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
         setIsLoading(false);
         // if manual install is true, then display the modal which displays PWA installation depends on their browser
         if(manualInstall){
-          toast.info(
-            "Trigger modal to display the info on how to install the app across different browsers"
-          );
+          setInstallationGuideModalOpen(true)
         }
       }
   };
