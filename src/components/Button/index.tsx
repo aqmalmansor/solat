@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import {
   BUTTON,
+  ROUNDED,
   SPACING,
   TEXT_ALIGN,
   TEXT_ALIGN_VARIANTS,
@@ -21,7 +22,21 @@ interface ButtonComponentProps {
   noPadding?: boolean;
   yPadding?: SPACING;
   xPadding?: SPACING;
+  rounded?: ROUNDED;
 }
+
+const ROUNDED_VARIANT: Record<ROUNDED, string> = {
+  [ROUNDED.NONE]: "rounded-none",
+  [ROUNDED.RESET]: "",
+  [ROUNDED.SMALL]: "rounded-sm",
+  [ROUNDED.MEDIUM]: "rounded-md",
+  [ROUNDED.NORMAL]: "rounded",
+  [ROUNDED.LARGE]: "rounded-lg",
+  [ROUNDED.XL]: "rounded-xl",
+  [ROUNDED.XXL]: "rounded-xxl",
+  [ROUNDED.XXXL]: "rounded-xxxl",
+  [ROUNDED.FULL]: "rounded-full",
+};
 
 const BUTTON_VARIANT: Record<BUTTON, string> = {
   [BUTTON.primary]: "bg-primary text-secondary",
@@ -40,6 +55,7 @@ const Button = ({
   noPadding,
   yPadding,
   xPadding,
+  rounded,
   ...props
 }: ButtonComponentProps): JSX.Element => {
   const renderButtonContent = () => {
@@ -110,6 +126,10 @@ const Button = ({
     return label;
   };
 
+  const borderRounded =
+    rounded !== undefined
+      ? ROUNDED_VARIANT[rounded]
+      : ROUNDED_VARIANT[ROUNDED.FULL];
   const buttonYPadding =
     yPadding !== undefined
       ? YPADDING_VARIANT[yPadding]
@@ -126,9 +146,8 @@ const Button = ({
 
   const addOn = salt !== undefined ? salt.trim() : "";
   const newClassName =
-    `min-h-[1.6rem] rounded-full ${buttonSpacing.trim()} ${align} ${buttonColor.trim()} ${
-      TEXT_ALIGN_VARIANTS[align]
-    } ${addOn}`.trim();
+    `min-h-[1.6rem] rounded-md ${buttonSpacing.trim()} ${align} ${buttonColor.trim()} 
+    ${TEXT_ALIGN_VARIANTS[align]} ${addOn} ${borderRounded.trim()}`.trim();
 
   return (
     <motion.button
@@ -156,6 +175,7 @@ Button.defaultProps = {
   noPadding: false,
   yPadding: undefined,
   xPadding: undefined,
+  rounded: undefined,
 };
 
 export default Button;

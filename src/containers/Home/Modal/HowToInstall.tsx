@@ -20,7 +20,7 @@ const HowToInstall = (): JSX.Element => {
       platform === platforms.OPERA ||
       platform === platforms.IDEVICE
     ) {
-      return "How To Install";
+      return <div className="h2 mb-3 w-full font-semibold">How To Install</div>;
     }
 
     return null;
@@ -121,11 +121,12 @@ const HowToInstall = (): JSX.Element => {
         justify={JUSTIFY_CONTENT.start}
         align={ALIGN_ITEMS.start}
       >
-        <div className="h2 mb-3 w-full font-semibold">{renderHeader()}</div>
+        {renderHeader()}
         {renderInstallationGuide()}
         <Flex justify={JUSTIFY_CONTENT.center} noPadding>
           <Button
             label="Close"
+            fill
             yPadding={SPACING.extraSmall}
             xPadding={SPACING.extraSmall}
             onClick={() => setInstallationGuideModalOpen(false)}

@@ -35,7 +35,7 @@ const Modal = ({
         animate="visible"
         variants={modalAnimation}
         onClick={(e) => e.stopPropagation()}
-        className={`m-auto flex w-[90%] max-w-[600px] flex-col items-center rounded-[20px] bg-white ${modalHeight}`}
+        className={`m-auto flex w-[90%] max-w-[600px] flex-col items-center rounded-lg bg-white ${modalHeight}`}
       >
         <div className="absolute right-0 top-0">
           <Button
