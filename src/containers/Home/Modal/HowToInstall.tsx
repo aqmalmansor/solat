@@ -9,6 +9,10 @@ import helper, { platforms } from "utils/helper";
 import icons from "assets/icons";
 import Button from "components/Button";
 
+const GuideIcon = ({ src }: { src: string }) => {
+  return <SVG src={src} height={20} width={20} fill="#111" />;
+};
+
 const HowToInstall = (): JSX.Element => {
   const { setInstallationGuideModalOpen } = useUIStore();
 
@@ -21,7 +25,7 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>1. Tap this icon on the address bar</div>
-            <SVG src={icons.A2HS.firefoxMenu} height={20} width={20} />
+            <GuideIcon src={icons.A2HS.firefoxMenu} />
           </Flex>
           <div>2. Then tap on 'Install'</div>
         </>
@@ -34,11 +38,11 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>1. Tap on the menu button</div>
-            <SVG src={icons.A2HS.operaMenu} height={20} width={20} />
+            <GuideIcon src={icons.A2HS.operaMenu} />
           </Flex>
-          <Flex noPadding gap={SPACING.extraSmall}>
+          <Flex noPadding gap={SPACING.extraSmall} salt="flex-wrap">
             <div>2. Then tap the 'Add to home screen' button</div>
-            <SVG src={icons.A2HS.operaA2HS} height={20} width={20} />
+            <GuideIcon src={icons.A2HS.operaA2HS} />
           </Flex>
         </>
       );
@@ -50,11 +54,11 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>1. Tap this icon on the address bar</div>
-            <SVG src={icons.A2HS.iosShare} height={20} width={20} />
+            <GuideIcon src={icons.A2HS.iosShare} />
           </Flex>
-          <Flex noPadding gap={SPACING.extraSmall}>
+          <Flex noPadding gap={SPACING.extraSmall} salt="flex-wrap">
             <div>2. Then tap on the 'Add to Home Screen'</div>
-            <SVG src={icons.A2HS.iosA2HS} height={20} width={20} />
+            <GuideIcon src={icons.A2HS.iosA2HS} />
           </Flex>
         </>
       );
@@ -83,7 +87,7 @@ const HowToInstall = (): JSX.Element => {
   return (
     <Modal onClick={() => setInstallationGuideModalOpen(false)}>
       <Flex direction="column" salt="bg-rose-900" gap={SPACING.small}>
-        <div className="h2 mb-2">How To Install</div>
+        <div className="h2 mb-2 w-full text-start">How To Install</div>
         {renderInstallationGuide()}
       </Flex>
 
