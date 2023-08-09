@@ -221,6 +221,7 @@ const Home = () => {
         justify={JUSTIFY_CONTENT.center}
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
+        <HowToInstall />
         {solat && solatInfoModalIsOpen && <PrayerInfo />}
         {insallationGuideModalIsOpen && <HowToInstall />}
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}

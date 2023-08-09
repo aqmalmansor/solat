@@ -1,6 +1,11 @@
-# 1.0.1
+# 1.1.1
+
+- fixed button default padding
+
+# 1.1.0
 
 - added pwa installation guide modal
+- added card info modal
 
 # 1.0.0
 

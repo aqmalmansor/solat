@@ -126,6 +126,8 @@ const HowToInstall = (): JSX.Element => {
         <Flex justify={JUSTIFY_CONTENT.center} noPadding>
           <Button
             label="Close"
+            yPadding={SPACING.extraSmall}
+            xPadding={SPACING.extraSmall}
             onClick={() => setInstallationGuideModalOpen(false)}
           />
         </Flex>
