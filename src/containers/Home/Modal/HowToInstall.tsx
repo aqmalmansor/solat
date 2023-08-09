@@ -74,7 +74,9 @@ const HowToInstall = (): JSX.Element => {
   return (
     <Modal onClick={() => setInstallationGuideModalOpen(false)}>
       {platform}
-      <Flex>{renderInstallationGuide()}</Flex>
+      <Flex direction="column" salt="bg-rose-900">
+        {renderInstallationGuide()}
+      </Flex>
 
       <button type="button" onClick={() => setPlatform("idevice")}>
         IDEVICE
