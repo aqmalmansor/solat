@@ -3,11 +3,15 @@ import SVG from "react-inlinesvg";
 
 import Flex from "components/Flex";
 import Modal from "components/Modal";
-import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
-import { useUIStore } from "store/ui";
-import helper, { platforms } from "utils/helper";
-import icons from "assets/icons";
 import Button from "components/Button";
+
+import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
+
+import { useUIStore } from "store/ui";
+
+import helper, { platforms } from "utils/helper";
+
+import icons from "assets/icons";
 
 const GuideIcon = ({ src }: { src: string }) => {
   return <SVG src={src} height={20} width={20} fill="#111" />;
