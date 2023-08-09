@@ -1,22 +1,18 @@
+import { useUIStore } from "store/ui";
+
 import Flex from "components/Flex";
 import Modal from "components/Modal";
-import { useUIStore } from "store/ui";
-import { compulsaryPrayerPlaceholder } from "utils/placeholder";
 
 const PrayerInfo = () => {
   const { setSolatInfoModalIsOpen, solatInfoModalIsOpen, solat } = useUIStore();
 
-  const modalSolat = compulsaryPrayerPlaceholder.find(
-    (item) => item.id === solat
-  );
-
-  if (!modalSolat) {
+  if (!solat) {
     return null;
   }
 
   return (
     <Modal onClick={() => setSolatInfoModalIsOpen(!solatInfoModalIsOpen)}>
-      <Flex>{modalSolat.name}</Flex>
+      <Flex>{solat.name}</Flex>
     </Modal>
   );
 };

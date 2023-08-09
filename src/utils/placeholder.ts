@@ -1,4 +1,4 @@
-import { SolatEnum } from "entities/solat";
+import { SolatEnum, ICompulsaryPrayerPlaceholder } from "entities/solat";
 
 export const zon = {
   johor: [
@@ -235,14 +235,6 @@ export const zon = {
     ["Putrajaya", "wlp-2"],
   ],
 };
-
-export interface ICompulsaryPrayerPlaceholder {
-  id: SolatEnum;
-  name: string;
-  desc: string;
-  niat: string;
-  image: string;
-}
 
 export const compulsaryPrayerPlaceholder: ICompulsaryPrayerPlaceholder[] = [
   {

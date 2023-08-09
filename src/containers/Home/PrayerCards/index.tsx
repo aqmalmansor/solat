@@ -3,15 +3,15 @@ import dayjs from "dayjs";
 import uuid from "react-uuid";
 
 import { useSolatStore } from "store/solat";
-
-import helper from "utils/helper";
+import { useUIStore } from "store/ui";
 
 import Card from "./Card";
 import Flex from "components/Flex";
 
 import { JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
-import { useUIStore } from "store/ui";
 import { SolatEnum } from "entities/solat";
+
+import { compulsaryPrayerPlaceholder } from "utils/placeholder";
 
 const PrayerCards = () => {
   const {
@@ -95,16 +95,24 @@ const PrayerCards = () => {
           default:
             break;
         }
+
+        const solatData = compulsaryPrayerPlaceholder.find(
+          (item) => item.id === solatType
+        );
+
+        if (!solatData) {
+          // If no solat is selected, return null
+          return null;
+        }
+
         return (
           <Card
             key={uuid()}
-            type={solatType ?? SolatEnum.none}
+            data={solatData}
             time={item[1]}
             onClick={() => {
-              if (solatType) {
-                setSolat(solatType);
-                setSolatInfoModalIsOpen(true);
-              }
+              setSolat(solatData);
+              setSolatInfoModalIsOpen(true);
             }}
           />
         );
