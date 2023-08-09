@@ -20,11 +20,13 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>Tap this icon on the address bar</div>
-            <SVG src={icons.A2HS.firefoxMenu} /> {/* firefoxMenu */}
+            <SVG src={icons.A2HS.firefoxMenu} height={20} width={20} />
+            {/* firefoxMenu */}
           </Flex>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>then tap on the 'Install'</div>
-            <SVG src={icons.A2HS.firefoxA2HS} /> {/* firefoxA2HS */}
+            <SVG src={icons.A2HS.firefoxA2HS} height={20} width={20} />
+            {/* firefoxA2HS */}
           </Flex>
         </>
       );
@@ -36,11 +38,13 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>tap on the menu button</div>
-            <SVG src={icons.A2HS.operaMenu} /> {/* operaMenu */}
+            <SVG src={icons.A2HS.operaMenu} height={20} width={20} />
+            {/* operaMenu */}
           </Flex>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>then tap the 'Add to home screen'</div>
-            <SVG src={icons.A2HS.operaA2HS} /> {/* operaA2HS */}
+            <SVG src={icons.A2HS.operaA2HS} height={20} width={20} />
+            {/* operaA2HS */}
           </Flex>
         </>
       );
@@ -52,11 +56,13 @@ const HowToInstall = (): JSX.Element => {
         <>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>Tap this icon on the address bar</div>
-            <SVG src={icons.A2HS.iosShare} /> {/* iosShare */}
+            <SVG src={icons.A2HS.iosShare} height={20} width={20} />
+            {/* iosShare */}
           </Flex>
           <Flex noPadding gap={SPACING.extraSmall}>
             <div>then tap on the 'Add to Home Screen'</div>
-            <SVG src={icons.A2HS.iosA2HS} /> {/* iosA2HS */}
+            <SVG src={icons.A2HS.iosA2HS} height={20} width={20} />
+            {/* iosA2HS */}
           </Flex>
         </>
       );
@@ -74,7 +80,7 @@ const HowToInstall = (): JSX.Element => {
   return (
     <Modal onClick={() => setInstallationGuideModalOpen(false)}>
       {platform}
-      <Flex direction="column" salt="bg-rose-900">
+      <Flex direction="column" salt="bg-rose-900" gap={SPACING.small}>
         {renderInstallationGuide()}
       </Flex>
 
