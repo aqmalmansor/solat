@@ -9,8 +9,8 @@
 ## Features (To Be Added)
 
 - ~~Pwa~~
+- Prayer Info
 - Prayer Countdown
-- Prayer info
 - Share
 - Dark Mode
 - i18n
