@@ -10,6 +10,8 @@ import Card from "./Card";
 import Flex from "components/Flex";
 
 import { JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
+import { useUIStore } from "store/ui";
+import { SolatEnum } from "entities/solat";
 
 const PrayerCards = () => {
   const {
@@ -19,6 +21,8 @@ const PrayerCards = () => {
     todayPrayerTimes,
     setTodayPrayerTimes,
   } = useSolatStore();
+
+  const { setSolatInfoModalIsOpen, setSolat } = useUIStore();
 
   const formatPrayerToString = (param: number): string => {
     return dayjs(new Date(param * 1000)).format("HH:mm A");
@@ -68,11 +72,40 @@ const PrayerCards = () => {
       justify={JUSTIFY_CONTENT.between}
     >
       {Object.entries(todayPrayerTimes).map((item) => {
+        let solatType: SolatEnum | undefined = undefined;
+        switch (item[0]) {
+          case "subuh":
+            solatType = SolatEnum.subuh;
+            break;
+          case "syuruk":
+            solatType = SolatEnum.syuruk;
+            break;
+          case "zohor":
+            solatType = SolatEnum.zohor;
+            break;
+          case "asar":
+            solatType = SolatEnum.asar;
+            break;
+          case "maghrib":
+            solatType = SolatEnum.maghrib;
+            break;
+          case "isyak":
+            solatType = SolatEnum.isyak;
+            break;
+          default:
+            break;
+        }
         return (
           <Card
             key={uuid()}
-            type={helper.capitalizeWords(item[0])}
+            type={solatType ?? SolatEnum.none}
             time={item[1]}
+            onClick={() => {
+              if (solatType) {
+                setSolat(solatType);
+                setSolatInfoModalIsOpen(true);
+              }
+            }}
           />
         );
       })}

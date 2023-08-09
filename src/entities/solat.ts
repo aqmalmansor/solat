@@ -34,6 +34,7 @@ export interface IGetPrayerTimeResponse {
 }
 
 export enum SolatEnum {
+  none,
   subuh,
   syuruk,
   zohor,
