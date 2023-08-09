@@ -41,10 +41,11 @@ const Home = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready
         .then(() => {
-          console.log('service worker ready')
+          // Set service worker ready
           setServiceWorkerReady(true);
         })
         .catch(error => {
+          // Set service worker not ready
           console.error('Error getting service worker ready:', error);
         });
     }
@@ -55,13 +56,12 @@ const Home = () => {
     if(serviceWorkerReady){
       if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
         if (platform !== platforms.OTHER) {
-          setIsPWA(true);
+          setIsPWA(true); // isPWA
         }
       } else {
-        alert(`platform: ${platform}`);
-        alert(`platform native: ${platforms.NATIVE}`);
+        // if browser is not PWA supported, set manual install to true
         if (platform !== platforms.NATIVE && platform != platforms.OTHER) setManualInstall(true);
-        setIsPWA(false)
+        setIsPWA(false) // not PWA
       }
     }
   }, [serviceWorkerReady]);
@@ -153,11 +153,11 @@ const Home = () => {
                 });
               });
             } else {
-              alert("Geolocation is not supported by this browser.");
+              console.error("Geolocation is not supported by this browser.");
               displayCoordsLoader(false);
             }
           } else {
-            alert("Please allow your location permission in your browser.");
+            console.error("Please allow your location permission in your browser.");
             displayCoordsLoader(false);
           }
         });
