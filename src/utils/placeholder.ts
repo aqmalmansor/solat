@@ -1,3 +1,5 @@
+import { SolatEnum, ICompulsaryPrayerPlaceholder } from "entities/solat";
+
 export const zon = {
   johor: [
     ["Batu Pahat", "jhr-0"],
@@ -233,3 +235,48 @@ export const zon = {
     ["Putrajaya", "wlp-2"],
   ],
 };
+
+export const compulsaryPrayerPlaceholder: ICompulsaryPrayerPlaceholder[] = [
+  {
+    id: SolatEnum.syuruk,
+    name: "Syuruk",
+    desc: "Syuruk description",
+    niat: "No niat. Do checker later",
+    image: "No image for arabic niat",
+  },
+  {
+    id: SolatEnum.subuh,
+    name: "Subuh",
+    desc: "Subuh description",
+    niat: "Translation subuh",
+    image: "Niat subuh arabic",
+  },
+  {
+    id: SolatEnum.zohor,
+    name: "Zohor",
+    desc: "Zohor Descprtion",
+    niat: "Translation zohor",
+    image: "Niat zohor arabic",
+  },
+  {
+    id: SolatEnum.asar,
+    name: "Asar",
+    desc: "Asar description",
+    niat: "Translation asar",
+    image: "Niat asr image",
+  },
+  {
+    id: SolatEnum.maghrib,
+    name: "Maghrib",
+    desc: "Maghrib description",
+    niat: "Translation maghrib",
+    image: "Niat maghrib image",
+  },
+  {
+    id: SolatEnum.isyak,
+    name: "Isyak",
+    desc: "Isyak Desc",
+    niat: "Translation Isyak",
+    image: "Niat isyak image",
+  },
+];

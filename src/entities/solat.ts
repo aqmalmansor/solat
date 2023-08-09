@@ -34,6 +34,7 @@ export interface IGetPrayerTimeResponse {
 }
 
 export enum SolatEnum {
+  none,
   subuh,
   syuruk,
   zohor,
@@ -49,4 +50,12 @@ export interface ICompulsaryPrayer {
   asar: string;
   maghrib: string;
   isyak: string;
+}
+
+export interface ICompulsaryPrayerPlaceholder {
+  id: SolatEnum;
+  name: string;
+  desc: string;
+  niat: string;
+  image: string;
 }

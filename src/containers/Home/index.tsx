@@ -26,6 +26,7 @@ import SelectBlocks from "./SelectBlocks";
 import InstallPWA from "./Button/InstallPWA";
 import { useUIStore } from "store/ui";
 import HowToInstall from "./Modal/HowToInstall";
+import PrayerInfo from "./Modal/PrayerInfo";
 
 declare global {
   interface Navigator {
@@ -38,32 +39,34 @@ const Home = () => {
   const [serviceWorkerReady, setServiceWorkerReady] = useState(false);
   const platform = helper.getPlatform();
 
-
   useEffect(() => {
-    if ('serviceWorker' in navigator) {
+    if ("serviceWorker" in navigator) {
       navigator.serviceWorker.ready
         .then(() => {
           // Set service worker ready
           setServiceWorkerReady(true);
         })
-        .catch(error => {
+        .catch((error) => {
           // Set service worker not ready
-          console.error('Error getting service worker ready:', error);
+          console.error("Error getting service worker ready:", error);
         });
     }
   }, [navigator.serviceWorker]);
-  
 
   useEffect(() => {
-    if(serviceWorkerReady){
-      if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
+    if (serviceWorkerReady) {
+      if (
+        window.navigator.standalone === true ||
+        window.matchMedia("(display-mode: standalone)").matches
+      ) {
         if (platform !== platforms.OTHER) {
           setIsPWA(true); // isPWA
         }
       } else {
         // if browser is not PWA supported, set manual install to true
-        if (platform !== platforms.NATIVE && platform != platforms.OTHER) setManualInstall(true);
-        setIsPWA(false) // not PWA
+        if (platform !== platforms.NATIVE && platform != platforms.OTHER)
+          setManualInstall(true);
+        setIsPWA(false); // not PWA
       }
     }
   }, [serviceWorkerReady]);
@@ -79,10 +82,8 @@ const Home = () => {
     setJakimResponse,
   } = useSolatStore();
 
-  const {
-    insallationGuideModalIsOpen
-  } = useUIStore()
-
+  const { insallationGuideModalIsOpen, solat, solatInfoModalIsOpen } =
+    useUIStore();
 
   const { isLoading: getPrayerTimesBasedOnCodenameIsLoading } = useQuery<
     IGetPrayerTimeResponse,
@@ -164,7 +165,9 @@ const Home = () => {
               displayCoordsLoader(false);
             }
           } else {
-            console.error("Please allow your location permission in your browser.");
+            console.error(
+              "Please allow your location permission in your browser."
+            );
             displayCoordsLoader(false);
           }
         });
@@ -218,10 +221,12 @@ const Home = () => {
         justify={JUSTIFY_CONTENT.center}
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
-       
-        {insallationGuideModalIsOpen && <HowToInstall />} {/* PWA Installation Guide Modal */}
+        {solat && solatInfoModalIsOpen && <PrayerInfo />}
+        {insallationGuideModalIsOpen && <HowToInstall />}
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {isPWA === false && serviceWorkerReady && <InstallPWA manualInstall={manualInstall} />}
+        {isPWA === false && serviceWorkerReady && (
+          <InstallPWA manualInstall={manualInstall} />
+        )}
         <motion.div variants={Motion.textVariant(1)}>
           <Flex
             justify={JUSTIFY_CONTENT.center}
