@@ -51,3 +51,11 @@ export interface ICompulsaryPrayer {
   maghrib: string;
   isyak: string;
 }
+
+export interface ICompulsaryPrayerPlaceholder {
+  id: SolatEnum;
+  name: string;
+  desc: string;
+  niat: string;
+  image: string;
+}
