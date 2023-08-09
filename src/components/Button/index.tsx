@@ -1,7 +1,14 @@
 /* eslint-disable no-console */
 import React from "react";
 import { motion } from "framer-motion";
-import { BUTTON, TEXT_ALIGN, TEXT_ALIGN_VARIANTS } from "entities/tailwind";
+import {
+  BUTTON,
+  SPACING,
+  TEXT_ALIGN,
+  TEXT_ALIGN_VARIANTS,
+  XPADDING_VARIANT,
+  YPADDING_VARIANT,
+} from "entities/tailwind";
 
 interface ButtonComponentProps {
   fill?: boolean;
@@ -11,6 +18,9 @@ interface ButtonComponentProps {
   type?: BUTTON | string;
   align?: TEXT_ALIGN;
   salt?: React.ComponentProps<"div">["className"];
+  noPadding?: boolean;
+  yPadding?: SPACING;
+  xPadding?: SPACING;
 }
 
 const BUTTON_VARIANT: Record<BUTTON, string> = {
@@ -27,6 +37,9 @@ const Button = ({
   type = BUTTON.primary,
   align = TEXT_ALIGN.center,
   salt,
+  noPadding,
+  yPadding,
+  xPadding,
   ...props
 }: ButtonComponentProps): JSX.Element => {
   const renderButtonContent = () => {
@@ -97,10 +110,19 @@ const Button = ({
     return label;
   };
 
+  const buttonYPadding =
+    yPadding !== undefined
+      ? YPADDING_VARIANT[yPadding]
+      : YPADDING_VARIANT[SPACING.default];
+  const buttonXPadding =
+    xPadding !== undefined
+      ? XPADDING_VARIANT[xPadding]
+      : XPADDING_VARIANT[SPACING.default];
+  const buttonPadding = noPadding ? "" : `${buttonXPadding} ${buttonYPadding}`;
   const buttonWidth = fill ? "w-full" : "min-w-[150px]";
   const buttonColor = typeof type === "string" ? type : BUTTON_VARIANT[type];
   const buttonSpacing =
-    typeof type === "string" ? "" : `px-[1.6rem] py-[12px] ${buttonWidth}`;
+    typeof type === "string" ? "" : `${buttonWidth} ${buttonPadding.trim()}`;
 
   const addOn = salt !== undefined ? salt.trim() : "";
   const newClassName =
@@ -131,6 +153,9 @@ Button.defaultProps = {
   type: BUTTON.primary,
   align: TEXT_ALIGN.center,
   salt: undefined,
+  noPadding: false,
+  yPadding: undefined,
+  xPadding: undefined,
 };
 
 export default Button;

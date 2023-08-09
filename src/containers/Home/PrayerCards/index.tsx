@@ -3,13 +3,15 @@ import dayjs from "dayjs";
 import uuid from "react-uuid";
 
 import { useSolatStore } from "store/solat";
-
-import helper from "utils/helper";
+import { useUIStore } from "store/ui";
 
 import Card from "./Card";
 import Flex from "components/Flex";
 
 import { JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
+import { SolatEnum } from "entities/solat";
+
+import { compulsaryPrayerPlaceholder } from "utils/placeholder";
 
 const PrayerCards = () => {
   const {
@@ -19,6 +21,8 @@ const PrayerCards = () => {
     todayPrayerTimes,
     setTodayPrayerTimes,
   } = useSolatStore();
+
+  const { setSolatInfoModalIsOpen, setSolat } = useUIStore();
 
   const formatPrayerToString = (param: number): string => {
     return dayjs(new Date(param * 1000)).format("HH:mm A");
@@ -68,11 +72,48 @@ const PrayerCards = () => {
       justify={JUSTIFY_CONTENT.between}
     >
       {Object.entries(todayPrayerTimes).map((item) => {
+        let solatType: SolatEnum | undefined = undefined;
+        switch (item[0]) {
+          case "subuh":
+            solatType = SolatEnum.subuh;
+            break;
+          case "syuruk":
+            solatType = SolatEnum.syuruk;
+            break;
+          case "zohor":
+            solatType = SolatEnum.zohor;
+            break;
+          case "asar":
+            solatType = SolatEnum.asar;
+            break;
+          case "maghrib":
+            solatType = SolatEnum.maghrib;
+            break;
+          case "isyak":
+            solatType = SolatEnum.isyak;
+            break;
+          default:
+            break;
+        }
+
+        const solatData = compulsaryPrayerPlaceholder.find(
+          (item) => item.id === solatType
+        );
+
+        if (!solatData) {
+          // If no solat is selected, return null
+          return null;
+        }
+
         return (
           <Card
             key={uuid()}
-            type={helper.capitalizeWords(item[0])}
+            data={solatData}
             time={item[1]}
+            onClick={() => {
+              setSolat(solatData);
+              setSolatInfoModalIsOpen(true);
+            }}
           />
         );
       })}
