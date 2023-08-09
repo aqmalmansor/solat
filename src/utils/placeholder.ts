@@ -254,7 +254,7 @@ export const compulsaryPrayerPlaceholder: ICompulsaryPrayerPlaceholder[] = [
   {
     id: SolatEnum.zohor,
     name: "Zohor",
-    desc: "",
+    desc: "Zohor Descprtion",
     niat: "Translation zohor",
     image: "Niat zohor arabic",
   },

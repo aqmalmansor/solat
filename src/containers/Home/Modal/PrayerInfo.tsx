@@ -2,6 +2,7 @@ import { useUIStore } from "store/ui";
 
 import Flex from "components/Flex";
 import Modal from "components/Modal";
+import { ALIGN_ITEMS, JUSTIFY_CONTENT } from "entities/tailwind";
 
 const PrayerInfo = () => {
   const { setSolatInfoModalIsOpen, solatInfoModalIsOpen, solat } = useUIStore();
@@ -12,7 +13,11 @@ const PrayerInfo = () => {
 
   return (
     <Modal onClick={() => setSolatInfoModalIsOpen(!solatInfoModalIsOpen)}>
-      <Flex>
+      <Flex
+        direction="column"
+        justify={JUSTIFY_CONTENT.start}
+        align={ALIGN_ITEMS.start}
+      >
         {Object.values(solat).map((item, idx) => {
           if (idx === 0) {
             return null;
