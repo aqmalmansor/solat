@@ -12,7 +12,15 @@ const PrayerInfo = () => {
 
   return (
     <Modal onClick={() => setSolatInfoModalIsOpen(!solatInfoModalIsOpen)}>
-      <Flex>{solat.name}</Flex>
+      <Flex>
+        {Object.values(solat).map((item, idx) => {
+          if (idx === 0) {
+            return null;
+          }
+
+          return <div>{item}</div>;
+        })}
+      </Flex>
     </Modal>
   );
 };
