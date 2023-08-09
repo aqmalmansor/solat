@@ -56,6 +56,8 @@ const Home = () => {
       if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
         if (platform !== platforms.OTHER) {
           setIsPWA(true);
+          alert(`platform: ${platform}`);
+          alert(`platform native: ${platforms.NATIVE}`);
           if (platform !== platforms.NATIVE) setManualInstall(true);
         }
       } else {
