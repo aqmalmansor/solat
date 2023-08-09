@@ -14,6 +14,18 @@ const HowToInstall = (): JSX.Element => {
   const { setInstallationGuideModalOpen } = useUIStore();
   const platform = helper.getPlatform();
 
+  const renderHeader = () => {
+    if (
+      platform === platforms.FIREFOX ||
+      platform === platforms.OPERA ||
+      platform === platforms.IDEVICE
+    ) {
+      return "How To Install";
+    }
+
+    return null;
+  };
+
   const renderInstallationGuide = () => {
     // Firefox mobile
     if (platform === platforms.FIREFOX) {
@@ -84,9 +96,9 @@ const HowToInstall = (): JSX.Element => {
     // If browser doesnt support PWA installation
     return (
       <Flex
-        noPadding
+        xPadding={SPACING.none}
+        yPadding={SPACING.extraSmall}
         direction="column"
-        salt="min-h-[150px]"
         justify={JUSTIFY_CONTENT.center}
         align={ALIGN_ITEMS.center}
       >
@@ -109,12 +121,14 @@ const HowToInstall = (): JSX.Element => {
         justify={JUSTIFY_CONTENT.start}
         align={ALIGN_ITEMS.start}
       >
-        <div className="h2 mb-3 w-full font-semibold">How To Install</div>
+        <div className="h2 mb-3 w-full font-semibold">{renderHeader()}</div>
         {renderInstallationGuide()}
-        <Button
-          label="Close"
-          onClick={() => setInstallationGuideModalOpen(false)}
-        />
+        <Flex justify={JUSTIFY_CONTENT.center} noPadding>
+          <Button
+            label="Close"
+            onClick={() => setInstallationGuideModalOpen(false)}
+          />
+        </Flex>
       </Flex>
     </Modal>
   );
