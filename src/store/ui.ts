@@ -1,17 +1,16 @@
 import { create } from "zustand";
 
 import { SolatEnum } from "entities/solat";
-import { IDisplaySolatModalParam } from "entities/ui";
 
-export interface IUiSlice {
+export interface ZusUIType {
   solat: SolatEnum | undefined;
-  displayModal: boolean;
-  displaySolatInfoModal: (solatType: IDisplaySolatModalParam) => void;
+  insallationGuideModalIsOpen: boolean;
+  setInstallationGuideModalOpen: (param: boolean) => void; 
+
 }
 
-export const createUiSlice = create<IUiSlice>((set, _get) => ({
+export const useUIStore = create<ZusUIType>((set, _get) => ({
   solat: undefined,
-  displayModal: false,
-  displaySolatInfoModal: ({ solat, displayModal }: IDisplaySolatModalParam) =>
-    set({ solat, displayModal }),
+  insallationGuideModalIsOpen: false,
+  setInstallationGuideModalOpen: (param: boolean) => set({ insallationGuideModalIsOpen: param }),
 }));
