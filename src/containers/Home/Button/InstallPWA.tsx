@@ -1,6 +1,7 @@
 import Button from "components/Button";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useUIStore } from "store/ui";
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -25,6 +26,8 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   const [prompt, setPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { setInstallationGuideModalOpen } = useUIStore()
+
   useEffect(() => {
     const handler = (event: BeforeInstallPromptEvent) => {
       setPrompt(event);
@@ -37,15 +40,18 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
   }, []);
 
   const handleAddToHomeScreenClick = () => {
+      // display loader
       setIsLoading(true);
+      // if prompt is true, beforeInstallPrompEvent is supported on the browser
       if (prompt) {
-        alert('prompting')
         prompt.prompt();
         prompt.userChoice
           .then((choiceResult) => {
             if (choiceResult.outcome === "accepted") {
+              // User successfully installed the app
               toast.success("The app was added to the home screen");
             } else {
+              // User failed to install the app
               toast.error("The app was not added to the home screen");
             }
             setIsLoading(false);
@@ -55,11 +61,11 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
             setIsLoading(false);
           });
       } else {
+        // browser does not support beforeInstallPrompEvent
         setIsLoading(false);
+        // if manual install is true, then display the modal which displays PWA installation depends on their browser
         if(manualInstall){
-          toast.info(
-            "Trigger modal to display the info on how to install the app across different browsers"
-          );
+          setInstallationGuideModalOpen(true)
         }
       }
   };

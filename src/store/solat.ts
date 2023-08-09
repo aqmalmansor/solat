@@ -7,7 +7,7 @@ import {
 } from "entities/solat";
 import { create } from "zustand";
 
-export interface ISolatSlice {
+export interface ZusSolatType {
   jakimResponse: undefined | IGetPrayerTimeResponse["data"];
   monthlyPrayerTimes: ICompulsaryPrayer[];
   addressState: string;
@@ -28,7 +28,7 @@ export interface ISolatSlice {
   displayCoordsLoader: (param: boolean) => void;
 }
 
-export const useSolatStore = create<ISolatSlice>((set, _get) => ({
+export const useSolatStore = create<ZusSolatType>((set, _get) => ({
   addressState: "",
   cityCode: "",
   userCoords: {

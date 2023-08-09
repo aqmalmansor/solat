@@ -24,6 +24,8 @@ import PrayerCards from "./PrayerCards";
 import Footer from "./Footer";
 import SelectBlocks from "./SelectBlocks";
 import InstallPWA from "./Button/InstallPWA";
+import { useUIStore } from "store/ui";
+import HowToInstall from "./Modal/HowToInstall";
 
 declare global {
   interface Navigator {
@@ -41,10 +43,11 @@ const Home = () => {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.ready
         .then(() => {
-          console.log('service worker ready')
+          // Set service worker ready
           setServiceWorkerReady(true);
         })
         .catch(error => {
+          // Set service worker not ready
           console.error('Error getting service worker ready:', error);
         });
     }
@@ -55,11 +58,12 @@ const Home = () => {
     if(serviceWorkerReady){
       if(window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches){
         if (platform !== platforms.OTHER) {
-          setIsPWA(true);
-          if (platform !== platforms.NATIVE) setManualInstall(true);
+          setIsPWA(true); // isPWA
         }
       } else {
-        setIsPWA(false)
+        // if browser is not PWA supported, set manual install to true
+        if (platform !== platforms.NATIVE && platform != platforms.OTHER) setManualInstall(true);
+        setIsPWA(false) // not PWA
       }
     }
   }, [serviceWorkerReady]);
@@ -74,6 +78,11 @@ const Home = () => {
     jakimResponse,
     setJakimResponse,
   } = useSolatStore();
+
+  const {
+    insallationGuideModalIsOpen
+  } = useUIStore()
+
 
   const { isLoading: getPrayerTimesBasedOnCodenameIsLoading } = useQuery<
     IGetPrayerTimeResponse,
@@ -151,11 +160,11 @@ const Home = () => {
                 });
               });
             } else {
-              alert("Geolocation is not supported by this browser.");
+              console.error("Geolocation is not supported by this browser.");
               displayCoordsLoader(false);
             }
           } else {
-            alert("Please allow your location permission in your browser.");
+            console.error("Please allow your location permission in your browser.");
             displayCoordsLoader(false);
           }
         });
@@ -209,6 +218,8 @@ const Home = () => {
         justify={JUSTIFY_CONTENT.center}
         salt="min-h-[95vh] container mx-auto relative pt-12"
       >
+       
+        {insallationGuideModalIsOpen && <HowToInstall />} {/* PWA Installation Guide Modal */}
         {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
         {isPWA === false && serviceWorkerReady && <InstallPWA manualInstall={manualInstall} />}
         <motion.div variants={Motion.textVariant(1)}>
