@@ -6,12 +6,11 @@
 
 - alpha release
 
-
-
 ## Features (To Be Added)
+
 - ~~Pwa~~
 - Prayer Countdown
 - Prayer info
-- Share 
+- Share
 - Dark Mode
 - i18n
