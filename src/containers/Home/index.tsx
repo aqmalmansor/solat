@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useQuery } from "react-query";
 import SVG from "react-inlinesvg";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Solat from "services/solat";
 
 import { useSolatStore } from "store/solat";
+import { useUIStore } from "store/ui";
 
 import { IGetPrayerTimeResponse } from "entities/solat";
 import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
@@ -20,13 +21,13 @@ import icons from "assets/icons";
 
 import ScreenLoader from "components/ScreenLoader";
 import Flex from "components/Flex";
+
 import PrayerCards from "./PrayerCards";
-import Footer from "./Footer";
-import SelectBlocks from "./SelectBlocks";
-import InstallPWA from "./Button/InstallPWA";
-import { useUIStore } from "store/ui";
 import HowToInstall from "./Modal/HowToInstall";
 import PrayerInfo from "./Modal/PrayerInfo";
+import ChangeLocation from "./Modal/ChangeLocation";
+import TimerSection from "./Timer";
+import Navbar from "./Navbar";
 
 declare global {
   interface Navigator {
@@ -64,8 +65,9 @@ const Home = () => {
         }
       } else {
         // if browser is not PWA supported, set manual install to true
-        if (platform !== platforms.NATIVE && platform != platforms.OTHER)
+        if (platform !== platforms.NATIVE && platform != platforms.OTHER) {
           setManualInstall(true);
+        }
         setIsPWA(false); // not PWA
       }
     }
@@ -80,6 +82,8 @@ const Home = () => {
     setArrAddressState,
     jakimResponse,
     setJakimResponse,
+    formModalIsOpen,
+    setFormModalOpen,
   } = useSolatStore();
 
   const { insallationGuideModalIsOpen, solat, solatInfoModalIsOpen } =
@@ -102,6 +106,7 @@ const Home = () => {
           ]
         );
         if (coordsLoader) displayCoordsLoader(false);
+        setFormModalOpen(false);
       },
       onError: (err) => {
         toast.error(err.message);
@@ -123,6 +128,7 @@ const Home = () => {
             )
           ]
         );
+        setFormModalOpen(false);
       },
       onSettled: () => {
         displayCoordsLoader(false);
@@ -179,14 +185,19 @@ const Home = () => {
     }
 
     return (
-      <React.Fragment>
+      <Flex
+        direction="column"
+        xPadding={SPACING.none}
+        yPadding={SPACING.reset}
+        salt="pb-16 pt-5"
+      >
         <Flex
           fill
-          justify={JUSTIFY_CONTENT.between}
-          gap={SPACING.small}
           noPadding
+          gap={SPACING.small}
+          justify={JUSTIFY_CONTENT.between}
         >
-          <div>{dayjs().format("DD MMMM YYYY")}</div>
+          <div>{dayjs().format("DD MMMM YYYY")} /&nbsp;</div>
           <button
             type="button"
             aria-label="Get Current location"
@@ -201,7 +212,7 @@ const Home = () => {
           </button>
         </Flex>
         <PrayerCards />
-      </React.Fragment>
+      </Flex>
     );
   };
 
@@ -213,37 +224,53 @@ const Home = () => {
       className="w-full"
       viewport={{ once: true }}
     >
-      <Flex
-        fill
-        direction="column"
-        gap={SPACING.small}
-        align={ALIGN_ITEMS.center}
-        justify={JUSTIFY_CONTENT.center}
-        salt="min-h-[95vh] container mx-auto relative pt-12"
-      >
-        {solat && solatInfoModalIsOpen && <PrayerInfo />}
-        {insallationGuideModalIsOpen && <HowToInstall />}
-        {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
-        {isPWA === false && serviceWorkerReady && (
-          <InstallPWA manualInstall={manualInstall} />
-        )}
-        <motion.div variants={Motion.textVariant(1)}>
+      <Navbar
+        pwaReady={isPWA === false && serviceWorkerReady}
+        displayInstallationGuide={manualInstall}
+      />
+      <div className="flex min-h-screen flex-col justify-between">
+        <Flex
+          fill
+          direction="column"
+          gap={SPACING.small}
+          id="timer-container"
+          align={ALIGN_ITEMS.center}
+          justify={JUSTIFY_CONTENT.between}
+          salt="container mx-auto relative"
+        >
+          <TimerSection />
+        </Flex>
+        <div className="w-screen bg-black/20">
           <Flex
-            justify={JUSTIFY_CONTENT.center}
-            gap={SPACING.small}
-            xPadding={SPACING.none}
-            yPadding={SPACING.extraSmall}
+            id="prayer-cards-container"
+            fill
             direction="column"
-            salt="text-center"
+            yPadding={SPACING.none}
+            gap={SPACING.small}
+            align={ALIGN_ITEMS.center}
+            justify={JUSTIFY_CONTENT.between}
+            salt="container mx-auto relative"
           >
-            <h1>Islamic Prayer Times in Malaysia</h1>
-            <h2>{jakimResponse?.place}</h2>
+            {renderHomeContent()}
           </Flex>
-        </motion.div>
-        <SelectBlocks />
-        {renderHomeContent()}
-      </Flex>
-      <Footer />
+        </div>
+      </div>
+
+      {solat && solatInfoModalIsOpen && <PrayerInfo />}
+      {insallationGuideModalIsOpen && <HowToInstall />}
+      {getPrayerTimesBasedOnCodenameIsLoading && <ScreenLoader />}
+      {formModalIsOpen && (
+        <ChangeLocation
+          getPrayerTimesCoords={() => getUserCurrentLocationHandler()}
+          getPrayerTimesCoordsIsLoading={coordsLoader}
+          getPrayerTimesCodenameIsLoading={
+            getPrayerTimesBasedOnCodenameIsLoading
+          }
+        />
+      )}
+      {/* {isPWA === false && serviceWorkerReady && (
+        <InstallPWA manualInstall={manualInstall} />
+      )} */}
     </motion.div>
   );
 };

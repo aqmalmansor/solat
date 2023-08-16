@@ -13,7 +13,7 @@ const Card = ({ data, time, onClick }: CardProps): JSX.Element | null => {
   return (
     <Button
       noPadding
-      type={BUTTON.clear}
+      variant={BUTTON.reset}
       salt="flex-grow"
       onClick={() => {
         onClick();

@@ -1,4 +1,5 @@
 import Button from "components/Button";
+import { BUTTON } from "entities/tailwind";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useUIStore } from "store/ui";
@@ -74,7 +75,8 @@ const InstallPWA = ({ manualInstall }: InstallPWAProps): JSX.Element => {
     <Button
       label={isLoading ? "Installing" : "Install App"}
       onClick={handleAddToHomeScreenClick}
-      type="absolute top-[.5rem] left-[1.4rem] bg-secondary text-white text-[.6rem] px-3 py-[.5rem]"
+      variant={BUTTON.reset}
+      // salt="absolute top-[.5rem] left-[1.4rem] bg-secondary text-white text-[.6rem] px-3 py-[.5rem] rounded-full"
     />
   );
 };

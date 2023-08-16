@@ -2,7 +2,8 @@ import { useUIStore } from "store/ui";
 
 import Flex from "components/Flex";
 import Modal from "components/Modal";
-import { ALIGN_ITEMS, JUSTIFY_CONTENT } from "entities/tailwind";
+import { ALIGN_ITEMS, JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
+import uuid from "react-uuid";
 
 const PrayerInfo = () => {
   const { setSolatInfoModalIsOpen, solatInfoModalIsOpen, solat } = useUIStore();
@@ -13,17 +14,20 @@ const PrayerInfo = () => {
 
   return (
     <Modal onClick={() => setSolatInfoModalIsOpen(!solatInfoModalIsOpen)}>
+      <Flex yPadding={SPACING.small} salt="bg-black/30 pr-[3.5rem]" fill>
+        {solat.name}
+      </Flex>
       <Flex
         direction="column"
         justify={JUSTIFY_CONTENT.start}
         align={ALIGN_ITEMS.start}
       >
         {Object.values(solat).map((item, idx) => {
-          if (idx === 0) {
+          if (idx === 0 || idx === 1) {
             return null;
           }
 
-          return <div>{item}</div>;
+          return <div key={uuid()}>{item}</div>;
         })}
       </Flex>
     </Modal>

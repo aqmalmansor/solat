@@ -115,9 +115,14 @@ const HowToInstall = (): JSX.Element => {
       onClick={() => setInstallationGuideModalOpen(false)}
       height="min-h-none"
     >
+      <Flex yPadding={SPACING.small} salt="bg-black/30 pr-[3.5rem]" fill>
+        Installation Guide
+      </Flex>
       <Flex
         direction="column"
         gap={SPACING.extraSmall}
+        yPadding={SPACING.reset}
+        salt="pt-2 pb-5"
         justify={JUSTIFY_CONTENT.start}
         align={ALIGN_ITEMS.start}
       >

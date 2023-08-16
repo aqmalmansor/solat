@@ -44,12 +44,12 @@ export enum SolatEnum {
 }
 
 export interface ICompulsaryPrayer {
-  subuh: string;
-  syuruk: string;
-  zohor: string;
-  asar: string;
-  maghrib: string;
-  isyak: string;
+  subuh: number;
+  syuruk: number;
+  zohor: number;
+  asar: number;
+  maghrib: number;
+  isyak: number;
 }
 
 export interface ICompulsaryPrayerPlaceholder {

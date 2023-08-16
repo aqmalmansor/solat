@@ -32,12 +32,12 @@ const PrayerCards = () => {
     if (jakimResponse) {
       const monthly = jakimResponse.times.map((day) => {
         return {
-          subuh: formatPrayerToString(day[0]),
-          syuruk: formatPrayerToString(day[1]),
-          zohor: formatPrayerToString(day[2]),
-          asar: formatPrayerToString(day[3]),
-          maghrib: formatPrayerToString(day[4]),
-          isyak: formatPrayerToString(day[5]),
+          subuh: day[0],
+          syuruk: day[1],
+          zohor: day[2],
+          asar: day[3],
+          maghrib: day[4],
+          isyak: day[5],
         };
       });
 
@@ -58,10 +58,6 @@ const PrayerCards = () => {
   if (!todayPrayerTimes) {
     return <div>No Data</div>;
   }
-
-  const jakimLink =
-    jakimResponse?.attributes.jakim_source ?? "javascript:void(0)";
-  const updatedJakimLink = jakimLink.replace("period=duration", "period=today");
 
   return (
     <Flex
@@ -109,7 +105,7 @@ const PrayerCards = () => {
           <Card
             key={uuid()}
             data={solatData}
-            time={item[1]}
+            time={formatPrayerToString(item[1])}
             onClick={() => {
               setSolat(solatData);
               setSolatInfoModalIsOpen(true);
@@ -117,10 +113,6 @@ const PrayerCards = () => {
           />
         );
       })}
-      <div className="flex w-full justify-center  gap-3 capitalize md:justify-end md:pr-10">
-        <div>Reference:</div>
-        <a href={updatedJakimLink}>{jakimResponse?.provider}</a>
-      </div>
     </Flex>
   );
 };

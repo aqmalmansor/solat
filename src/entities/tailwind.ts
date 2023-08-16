@@ -104,11 +104,12 @@ export const TEXT_ALIGN_VARIANTS: Record<TEXT_ALIGN, string> = {
 export enum BUTTON {
   primary,
   secondary,
-  clear,
+  reset,
 }
 
 export enum SPACING {
   none,
+  reset,
   extraSmall,
   small,
   default,
@@ -117,6 +118,7 @@ export enum SPACING {
 }
 
 export const XPADDING_VARIANT: Record<SPACING, string> = {
+  [SPACING.reset]: "",
   [SPACING.none]: "px-0",
   [SPACING.extraSmall]: "px-2",
   [SPACING.small]: "px-4",
@@ -126,6 +128,7 @@ export const XPADDING_VARIANT: Record<SPACING, string> = {
 };
 
 export const YPADDING_VARIANT: Record<SPACING, string> = {
+  [SPACING.reset]: "",
   [SPACING.none]: "py-0",
   [SPACING.extraSmall]: "py-2",
   [SPACING.small]: "py-4",
@@ -135,6 +138,7 @@ export const YPADDING_VARIANT: Record<SPACING, string> = {
 };
 
 export const GAP_VARIANT: Record<SPACING, string> = {
+  [SPACING.reset]: "",
   [SPACING.none]: "gap-0",
   [SPACING.extraSmall]: "gap-2",
   [SPACING.small]: "gap-4",

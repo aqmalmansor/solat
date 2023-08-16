@@ -1,20 +1,18 @@
-import React from "react";
-import { motion } from "framer-motion";
-
-import Motion from "utils/motion";
+import React, { LegacyRef, forwardRef } from "react";
 
 import {
-  JUSTIFY_CONTENT,
   ALIGN_ITEMS,
-  JUSTIFY_CONTENT_VARIANT,
   ALIGN_ITEMS_VARIANT,
+  GAP_VARIANT,
+  JUSTIFY_CONTENT,
+  JUSTIFY_CONTENT_VARIANT,
   SPACING,
   XPADDING_VARIANT,
   YPADDING_VARIANT,
-  GAP_VARIANT,
 } from "entities/tailwind";
 
 interface FlexComponentProps {
+  id?: string;
   children: React.ReactNode;
   fill?: boolean;
   noPadding?: boolean;
@@ -25,99 +23,94 @@ interface FlexComponentProps {
   direction?: "row" | "column" | "column-reverse" | "row-reverse";
   gap?: SPACING;
   salt?: React.ComponentProps<"div">["className"];
-  stagger?: boolean;
   style?: React.CSSProperties;
 }
 
-const Flex = ({
-  children,
-  fill,
-  noPadding,
-  direction,
-  xPadding,
-  yPadding,
-  justify,
-  align,
-  gap,
-  salt,
-  stagger,
-  style,
-}: FlexComponentProps): JSX.Element => {
-  const fillContainer = fill ? "flex w-full h-full" : "inline-flex";
+const Flex = forwardRef(
+  (props: FlexComponentProps, ref: LegacyRef<HTMLDivElement>): JSX.Element => {
+    const {
+      id,
+      children,
+      fill,
+      noPadding,
+      direction,
+      xPadding,
+      yPadding,
+      justify,
+      align,
+      gap,
+      salt,
+      style,
+    } = props;
 
-  const containerXPadding =
-    xPadding !== undefined
-      ? XPADDING_VARIANT[xPadding]
-      : XPADDING_VARIANT[SPACING.default];
-  const containerYPadding =
-    yPadding !== undefined
-      ? YPADDING_VARIANT[yPadding]
-      : YPADDING_VARIANT[SPACING.default];
-  const containerDefaultPadding = `${containerXPadding} ${containerYPadding}`;
-  const containerPadding = noPadding ? "" : containerDefaultPadding.trim();
+    const fillContainer = fill ? "flex w-full h-full" : "inline-flex";
 
-  const justifyContent =
-    justify !== undefined
-      ? JUSTIFY_CONTENT_VARIANT[justify]
-      : JUSTIFY_CONTENT_VARIANT[JUSTIFY_CONTENT.start];
+    const containerXPadding =
+      xPadding !== undefined
+        ? XPADDING_VARIANT[xPadding]
+        : XPADDING_VARIANT[SPACING.default];
+    const containerYPadding =
+      yPadding !== undefined
+        ? YPADDING_VARIANT[yPadding]
+        : YPADDING_VARIANT[SPACING.default];
+    const containerDefaultPadding = `${containerXPadding} ${containerYPadding}`;
+    const containerPadding = noPadding ? "" : containerDefaultPadding.trim();
 
-  const alignItems =
-    align !== undefined
-      ? ALIGN_ITEMS_VARIANT[align]
-      : ALIGN_ITEMS_VARIANT[ALIGN_ITEMS.center];
+    const justifyContent =
+      justify !== undefined
+        ? JUSTIFY_CONTENT_VARIANT[justify]
+        : JUSTIFY_CONTENT_VARIANT[JUSTIFY_CONTENT.start];
 
-  const containerGap =
-    gap !== undefined ? GAP_VARIANT[gap] : GAP_VARIANT[SPACING.default];
+    const alignItems =
+      align !== undefined
+        ? ALIGN_ITEMS_VARIANT[align]
+        : ALIGN_ITEMS_VARIANT[ALIGN_ITEMS.center];
 
-  const containerSalt = salt !== undefined ? salt : "";
+    const containerGap =
+      gap !== undefined ? GAP_VARIANT[gap] : GAP_VARIANT[SPACING.default];
 
-  const flexDirection = (dir: FlexComponentProps["direction"]) => {
-    switch (dir) {
-      case "row":
-        return "flex-row";
-      case "column":
-        return "flex-col";
-      case "column-reverse":
-        return "flex-col-reverse";
-      case "row-reverse":
-        return "flex-row-reverse";
-      default:
-        return "flex-row";
-    }
-  };
+    const containerSalt = salt !== undefined ? salt : "";
 
-  const newClass = `${fillContainer} ${justifyContent} ${alignItems} ${flexDirection(
-    direction
-  )} ${containerGap} ${containerPadding.trim()} ${containerSalt.trim()}`;
+    const flexDirection = (dir: FlexComponentProps["direction"]) => {
+      switch (dir) {
+        case "row":
+          return "flex-row";
+        case "column":
+          return "flex-col";
+        case "column-reverse":
+          return "flex-col-reverse";
+        case "row-reverse":
+          return "flex-row-reverse";
+        default:
+          return "flex-row";
+      }
+    };
+    const containerFlexDirection = flexDirection(direction);
 
-  if (stagger) {
+    const newClassname = [
+      fillContainer,
+      justifyContent,
+      alignItems,
+      containerFlexDirection,
+      containerGap,
+      containerPadding.trim(),
+      containerSalt.trim(),
+    ].join(" ");
+
     return (
-      <motion.div
-        variants={Motion.staggerContainer(0.3, 1)}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.1 }}
-        className={newClass.trim()}
-        style={style}
-      >
+      <div id={id} className={newClassname.trim()} style={style} ref={ref}>
         {children}
-      </motion.div>
+      </div>
     );
   }
-
-  return (
-    <div className={newClass.trim()} style={style}>
-      {children}
-    </div>
-  );
-};
+);
 
 export default Flex;
 
 Flex.defaultProps = {
+  id: undefined,
   fill: true,
   noPadding: false,
-  stagger: false,
   direction: "row",
   xPadding: undefined,
   yPadding: undefined,

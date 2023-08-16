@@ -17,6 +17,8 @@ export interface ZusSolatType {
   coordsLoader: boolean;
   arrAddressState: string[][];
   todayPrayerTimes: ICompulsaryPrayer | undefined;
+  formModalIsOpen: boolean;
+  setFormModalOpen: (param: boolean) => void;
   setTodayPrayerTimes: (param: ICompulsaryPrayer) => void;
   setArrAddressState: (array: string[][]) => void;
   setUserCoords: (coords: IGetPrayerTimeCoordParams) => void;
@@ -48,6 +50,8 @@ export const useSolatStore = create<ZusSolatType>((set, _get) => ({
   monthlyPrayerTimes: [],
   coordsLoader: false,
   todayPrayerTimes: undefined,
+  formModalIsOpen: false,
+  setFormModalOpen: (param: boolean) => set({ formModalIsOpen: param }),
   setTodayPrayerTimes: (param: ICompulsaryPrayer) =>
     set({ todayPrayerTimes: param }),
   setArrAddressState: (array: string[][]) => set({ arrAddressState: array }),

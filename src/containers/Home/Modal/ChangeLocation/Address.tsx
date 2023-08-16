@@ -9,43 +9,54 @@ import { zon } from "utils/placeholder";
 import Select from "components/Select";
 import Flex from "components/Flex";
 
-import { JUSTIFY_CONTENT } from "entities/tailwind";
+import { JUSTIFY_CONTENT, SPACING } from "entities/tailwind";
 
-const SelectBlocks = () => {
-  const {
-    setAddressState,
-    setArrAddressState,
-    addressState,
-    jakimResponse,
-    setCityCode,
-    arrAddressState,
-    cityCode,
-    setCodeBasedSolatTimeApiParams,
-    codeBasedSolatTimeApiParams,
-  } = useSolatStore();
+interface AddressProps {
+  state: string;
+  city: string;
+  setCurrentState: (param: string) => void;
+  setCity: (param: string) => void;
+}
+
+const MotionFlex = motion(Flex);
+
+const Address = ({
+  state,
+  setCurrentState,
+  city,
+  setCity,
+}: AddressProps): JSX.Element => {
+  const { setArrAddressState, jakimResponse, arrAddressState } =
+    useSolatStore();
 
   return (
-    <Flex
+    <MotionFlex
       noPadding
       fill
+      direction="column"
       justify={JUSTIFY_CONTENT.center}
-      salt="flex-wrap md:flex-nowrap"
+      gap={SPACING.extraSmall}
+      initial="hidden"
+      whileInView="show"
+      variants={Motion.staggerContainer(0.3, 1)}
+      viewport={{ once: true, amount: 0.1 }}
     >
-      <div className="basis-full md:basis-1/2">
-        <motion.div variants={Motion.slideIn("left", "smooth", 0.5, 1)}>
+      <div className="w-full">
+        <motion.div variants={Motion.slideIn("left", "smooth", 0.3, 0.5)}>
           <Select
             label="State"
             onChange={(e) => {
-              setAddressState(e.target.value);
-              const selectedCityList =
-                Object.values(zon)[
-                  Object.keys(zon).findIndex((i) => i === e.target.value)
-                ];
-              setArrAddressState(selectedCityList);
+              if (e.target.value) {
+                setCurrentState(e.target.value);
+                const selectedCityList =
+                  Object.values(zon)[
+                    Object.keys(zon).findIndex((i) => i === e.target.value)
+                  ];
+                setArrAddressState(selectedCityList);
+              }
             }}
             value={
-              addressState ||
-              helper.cityStateChecker(jakimResponse?.code ?? "wlp-01")
+              state || helper.cityStateChecker(jakimResponse?.code ?? "wlp-01")
             }
             options={Object.keys(zon).map((z) => {
               let newZ: string = z;
@@ -66,20 +77,16 @@ const SelectBlocks = () => {
           />
         </motion.div>
       </div>
-      <div className="basis-full md:basis-1/2">
-        <motion.div variants={Motion.slideIn("right", "smooth", 0.5, 1)}>
+      <div className="w-full">
+        <motion.div variants={Motion.slideIn("right", "smooth", 0.3, 0.5)}>
           <Select
             label="City"
             onChange={(e) => {
               if (e.target.value.length) {
-                setCityCode(e.target.value);
-                setCodeBasedSolatTimeApiParams({
-                  ...codeBasedSolatTimeApiParams,
-                  code: e.target.value,
-                });
+                setCity(e.target.value);
               }
             }}
-            value={cityCode}
+            value={city}
             options={
               arrAddressState.length > 0 &&
               arrAddressState.map((arr) => {
@@ -93,8 +100,8 @@ const SelectBlocks = () => {
           />
         </motion.div>
       </div>
-    </Flex>
+    </MotionFlex>
   );
 };
 
-export default SelectBlocks;
+export default Address;

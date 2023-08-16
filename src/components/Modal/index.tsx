@@ -8,6 +8,7 @@ import Backdrop from "./Backdrop";
 import Motion from "utils/motion";
 
 import Icons from "assets/icons";
+import { BUTTON } from "entities/tailwind";
 
 interface ModalComponentProps {
   variants?: Variants;
@@ -37,13 +38,14 @@ const Modal = ({
         onClick={(e) => e.stopPropagation()}
         className={`m-auto flex w-[90%] max-w-[600px] flex-col items-center rounded-lg bg-white ${modalHeight}`}
       >
-        <div className="absolute right-0 top-0">
+        <div className="absolute right-4 top-[6px]">
           <Button
             label={
               <SVG src={Icons.Cancel} fill="#7E7E7E" width={20} height={20} />
             }
             fill={false}
-            type="p-3 inline-flex items-center justify-center cursor-pointer"
+            variant={BUTTON.reset}
+            salt="p-3 inline-flex items-center justify-center cursor-pointer"
             onClick={() => onClick()}
           />
         </div>
