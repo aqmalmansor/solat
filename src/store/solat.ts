@@ -30,18 +30,21 @@ export interface ZusSolatType {
   displayCoordsLoader: (param: boolean) => void;
 }
 
+const localStorageCoords = JSON.parse(localStorage.getItem("coords") as string);
+const localStorageCodeName = localStorage.getItem("codename") as string;
+
 export const useSolatStore = create<ZusSolatType>((set, _get) => ({
   addressState: "",
   cityCode: "",
   userCoords: {
     coords: {
-      lat: "",
-      lng: "",
+      lat: localStorageCoords.coords.lat ?? "",
+      lng: localStorageCoords.coords.lng ?? "",
     },
   },
   arrAddressState: [[]],
   codeBasedSolatTimeApiParams: {
-    code: "wlp-0",
+    code: localStorageCodeName ?? "wlp-0",
     filter: FilterByPeriodEnum.day,
     appid: "mpt-json-api",
     appurl: "http://mpt.i906.my",
@@ -58,15 +61,20 @@ export const useSolatStore = create<ZusSolatType>((set, _get) => ({
   displayCoordsLoader: (param: boolean) => set({ coordsLoader: param }),
   setCityCode: (cityCode: string) => set({ cityCode }),
   setAddressState: (addressState: string) => set({ addressState }),
-  setUserCoords: (coords: IGetPrayerTimeCoordParams) =>
-    set({ userCoords: coords }),
+  setUserCoords: (coords: IGetPrayerTimeCoordParams) => {
+    localStorage.setItem("coords", JSON.stringify(coords));
+    set({ userCoords: coords });
+  },
   setJakimResponse: (jakimResponse: IGetPrayerTimeResponse["data"]) =>
     set({ jakimResponse }),
   setMonthlyPrayerTimes: (monthlyPrayerTimes: ICompulsaryPrayer[]) =>
     set({ monthlyPrayerTimes }),
 
-  setCodeBasedSolatTimeApiParams: (param: IGetPrayerTimeParams) =>
+  setCodeBasedSolatTimeApiParams: (param: IGetPrayerTimeParams) => {
+    localStorage.setItem("codename", param.code);
+
     set({
       codeBasedSolatTimeApiParams: param,
-    }),
+    });
+  },
 }));
