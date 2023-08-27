@@ -52,6 +52,10 @@ const Address = ({
                   Object.values(zon)[
                     Object.keys(zon).findIndex((i) => i === e.target.value)
                   ];
+
+                if (selectedCityList.length === 1) {
+                  setCity(selectedCityList[0][1]);
+                }
                 setArrAddressState(selectedCityList);
               }
             }}

@@ -13,7 +13,7 @@ const Navbar = ({
   displayInstallationGuide,
 }: NavbarProps): JSX.Element => {
   return (
-    <Container fill id="navbar" parentSalt="bg-black text-white">
+    <Container fill id="navbar" parentSalt="bg-primary text-white">
       <Flex justify={JUSTIFY_CONTENT.between}>
         <div>Logo</div>
         <Flex noPadding fill={false}>

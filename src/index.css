@@ -14,8 +14,8 @@ body {
 
 @layer base {
   :root {
-    --color-primary: 255 115 179;
-    --color-secondary: 111 114 185;
-    --color-tertiary: 227 45 44;
+    --color-primary: 51 82 50;
+    --color-secondary: 255 250 230;
+    --color-tertiary: 249 199 126;
   }
 }

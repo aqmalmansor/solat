@@ -14,7 +14,11 @@ const PrayerInfo = () => {
 
   return (
     <Modal onClick={() => setSolatInfoModalIsOpen(!solatInfoModalIsOpen)}>
-      <Flex yPadding={SPACING.small} salt="bg-black/30 pr-[3.5rem]" fill>
+      <Flex
+        yPadding={SPACING.small}
+        salt="bg-primary text-white pr-[3.5rem]"
+        fill
+      >
         {solat.name}
       </Flex>
       <Flex

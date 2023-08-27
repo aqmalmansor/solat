@@ -39,23 +39,20 @@ const ChangeLocation = ({
   const [formError, setFormError] = useState<string[]>([]);
 
   const codenameFormSubmit = () => {
-    setFormError([]);
     const err: string[] = [];
 
-    if (currentCityCode.length === 0) {
+    if (!currentCityCode) {
       err.push("City code is required");
     }
 
-    if (currentState.length === 0) {
-      err.push("State is required");
-    }
-    if (!err.length) {
+    setFormError(err);
+
+    if (err.length === 0) {
       setCodeBasedSolatTimeApiParams({
         ...codeBasedSolatTimeApiParams,
         code: currentCityCode,
       });
-    } else {
-      setFormError(err);
+      setFormModalOpen(false);
     }
   };
 
@@ -76,12 +73,19 @@ const ChangeLocation = ({
       {formError.length > 0 && (
         <Flex
           yPadding={SPACING.none}
-          salt="pb-5"
+          salt="relative bottom-[17px]"
           direction="column"
           align={ALIGN_ITEMS.start}
         >
           {formError.map((err, _idx) => {
-            return <div className="pl-2 text-rose-700">{err}</div>;
+            return (
+              <div
+                key={`form-error-${_idx}-${Math.random()}`}
+                className="pl-2 text-rose-700"
+              >
+                {err}
+              </div>
+            );
           })}
         </Flex>
       )}

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import {
   isMobile,
   isAndroid,
@@ -93,8 +94,19 @@ const getPlatform = () => {
   } else if (isIOS && isMobile) {
     platform = platforms.IDEVICE;
   }
-
   return platform;
+};
+
+const checkDurationBetweenSolat = (diff: number) => {
+  return dayjs.duration(diff * 1000, "milliseconds");
+};
+
+const countDownFormat = function (your_number: number) {
+  let number = "" + your_number;
+  while (number.length < 2) {
+    number = "0" + number;
+  }
+  return number;
 };
 
 export default {
@@ -102,4 +114,6 @@ export default {
   convertIndexToPrayerTitle,
   capitalizeWords,
   getPlatform,
+  checkDurationBetweenSolat,
+  countDownFormat,
 };

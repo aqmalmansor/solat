@@ -114,6 +114,8 @@ const Home = () => {
     }
   );
 
+  console.log("test");
+
   useQuery<IGetPrayerTimeResponse, Error>(
     ["getPrayerTimeBasedOnCoordsQuery", userCoords],
     async () => await Solat.basedOnCoords(userCoords),
@@ -197,7 +199,7 @@ const Home = () => {
           gap={SPACING.small}
           justify={JUSTIFY_CONTENT.between}
         >
-          <div>{dayjs().format("DD MMMM YYYY")} /&nbsp;</div>
+          <div>{dayjs().format("DD MMMM YYYY")}</div>
           <button
             type="button"
             aria-label="Get Current location"
@@ -207,7 +209,12 @@ const Home = () => {
             {coordsLoader ? (
               "Loading"
             ) : (
-              <SVG src={icons.GetCurrentLocationSVG} height={25} width={25} />
+              <SVG
+                src={icons.GetCurrentLocationSVG}
+                fill="#fff"
+                height={25}
+                width={25}
+              />
             )}
           </button>
         </Flex>
@@ -234,13 +241,13 @@ const Home = () => {
           direction="column"
           gap={SPACING.small}
           id="timer-container"
-          align={ALIGN_ITEMS.center}
+          align={ALIGN_ITEMS.start}
           justify={JUSTIFY_CONTENT.between}
           salt="container mx-auto relative"
         >
           <TimerSection />
         </Flex>
-        <div className="w-screen bg-black/20">
+        <div className="w-screen bg-primary text-white">
           <Flex
             id="prayer-cards-container"
             fill
@@ -268,9 +275,6 @@ const Home = () => {
           }
         />
       )}
-      {/* {isPWA === false && serviceWorkerReady && (
-        <InstallPWA manualInstall={manualInstall} />
-      )} */}
     </motion.div>
   );
 };

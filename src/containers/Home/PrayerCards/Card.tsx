@@ -19,9 +19,13 @@ const Card = ({ data, time, onClick }: CardProps): JSX.Element | null => {
         onClick();
       }}
       label={
-        <div className="max-h-15 flex h-full flex-grow flex-col items-center justify-center rounded-md py-5 shadow-md">
-          <div>{data.name}</div>
-          <div>{time}</div>
+        <div className="max-h-15 flex h-full min-w-[110px] flex-grow flex-col items-center justify-center overflow-hidden rounded-lg shadow-md">
+          <div className="flex w-full items-center justify-center border-b-[1px] border-solid border-primary bg-secondary py-3 font-semibold text-primary">
+            {data.name}
+          </div>
+          <div className="flex w-full items-center justify-center bg-white py-6 text-primary">
+            {time}
+          </div>
         </div>
       }
     ></Button>
