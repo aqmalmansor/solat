@@ -101,19 +101,10 @@ const checkDurationBetweenSolat = (diff: number) => {
   return dayjs.duration(diff * 1000, "milliseconds");
 };
 
-const countDownFormat = function (your_number: number) {
-  let number = "" + your_number;
-  while (number.length < 2) {
-    number = "0" + number;
-  }
-  return number;
-};
-
 export default {
   cityStateChecker,
   convertIndexToPrayerTitle,
   capitalizeWords,
   getPlatform,
   checkDurationBetweenSolat,
-  countDownFormat,
 };

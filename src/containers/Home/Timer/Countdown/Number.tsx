@@ -1,8 +1,6 @@
 import Flex from "components/Flex";
 import { SPACING } from "entities/tailwind";
 
-import Utils from "utils/helper";
-
 interface NumberComponentProps {
   time: string;
   label: string;
