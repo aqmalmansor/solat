@@ -31,7 +31,6 @@ const Timer = () => {
           const getTomorrowSchedule = monthlyPrayerTimes.find(
             (_ptItem, ptIndex) => ptIndex + 1 === dayjs().date() + 1
           );
-          console.log("yoo 1");
           if (
             getTomorrowSchedule &&
             dayjs().unix() > todayPrayerTimesList[idx - 1][1]
@@ -47,8 +46,6 @@ const Timer = () => {
             dayjs().unix() < item[1] &&
             dayjs().unix() > todayPrayerTimesList[idx - 1][1]
           ) {
-            console.log("yoo 2");
-
             if (item[0] !== "syuruk") {
               setNextSolatTime({
                 name: todayPrayerTimesList[idx][0],
