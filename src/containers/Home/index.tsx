@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import SVG from "react-inlinesvg";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import uq from "@umalqura/core";
 
 import Solat from "services/solat";
 
@@ -114,8 +115,6 @@ const Home = () => {
     }
   );
 
-  console.log("test");
-
   useQuery<IGetPrayerTimeResponse, Error>(
     ["getPrayerTimeBasedOnCoordsQuery", userCoords],
     async () => await Solat.basedOnCoords(userCoords),
@@ -186,6 +185,9 @@ const Home = () => {
       return <div>No data</div>;
     }
 
+    const hj = uq(new Date()).subtract(1, "day");
+    const hijriDate = hj.format("dd MMMM yyyy");
+
     return (
       <Flex
         direction="column"
@@ -199,7 +201,9 @@ const Home = () => {
           gap={SPACING.small}
           justify={JUSTIFY_CONTENT.between}
         >
-          <div>{dayjs().format("DD MMMM YYYY")}</div>
+          <div>
+            {dayjs().format("DD MMMM YYYY")} / {hijriDate}
+          </div>
           <button
             type="button"
             aria-label="Get Current location"

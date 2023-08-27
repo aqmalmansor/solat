@@ -26,7 +26,7 @@ const Timer = () => {
       // Compare current time with prayer times list
       todayPrayerTimesList.forEach((item, idx) => {
         // Isyak compare with the next day Subuh
-        if (idx === todayPrayerTimesList.length - 1) {
+        if (idx === todayPrayerTimesList.length) {
           const getTomorrowSchedule = monthlyPrayerTimes.find(
             (_ptItem, ptIndex) => ptIndex + 1 === dayjs().date() + 1
           );
@@ -40,15 +40,17 @@ const Timer = () => {
             });
           }
         } else {
-          // Compare with the next solat
+          // Compare with the next solat and exlude syuruk
           if (
             dayjs().unix() < item[1] &&
             dayjs().unix() > todayPrayerTimesList[idx - 1][1]
           ) {
-            setNextSolatTime({
-              name: todayPrayerTimesList[idx][0],
-              unix: todayPrayerTimesList[idx][1],
-            });
+            if (item[0] !== "syuruk") {
+              setNextSolatTime({
+                name: todayPrayerTimesList[idx][0],
+                unix: todayPrayerTimesList[idx][1],
+              });
+            }
           }
         }
       });
